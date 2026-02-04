@@ -22,8 +22,8 @@ The goal is to show how web architecture evolved and what problem each approach 
 
 ![UI Screenshot](docs/ui-screenshot.png)
 
-The database schema, user interface, and business operations remain the same in every stage.
-Only the data flow and backend structure change.
+The database schema and business operations remain the same across all stages.
+The way the UI is rendered and how data flows from the server to the browser evolves progressively.
 
 ---
 
