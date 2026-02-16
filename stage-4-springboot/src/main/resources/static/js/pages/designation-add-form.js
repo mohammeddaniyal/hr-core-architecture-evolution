@@ -7,10 +7,20 @@ window.pages.designationAddForm={
         const designationAddModule=document.getElementById('designationAddModule');
         notification.innerHTML='';
         errorSection.innerHTML='';
-        if(!designationValidator.validate(frm)) return;
 
+        const formData={
+        title: frm.title.value
+        };
 
-        const title=frm.title.value.trim();
+        const result= designationValidator.validate(formData);
+
+        if(!result.valid)
+        {
+            this.showError(result.errors);
+            return;
+        }
+
+        const title=formData.title.trim();
 
         const designation={
         'code':0,
@@ -37,8 +47,38 @@ window.pages.designationAddForm={
             `;
         }catch(error)
         {
-            alert(error);
+            console.log(error);
+            if(error.type==='VALIDATION')
+            {
+                this.showError(error.errors);
+            }else if(error.type==='BUSINESS')
+            {
+                this.showError(error.errors);
+            }else
+            {
+                alert('Critical error '+error.message)
+            }
         }
 
+    },
+    showError: function(errors)
+    {
+        const titleErrorSection=document.getElementById('titleErrorSection');
+        const errorSection=document.getElementById('errorSection');
+
+        titleErrorSection.innerHTML='';
+        errorSection.innerHTML='';
+
+        if(errors.title)
+        {
+            titleErrorSection.innerHTML=errors.title;
+            document.getElementById('addDesignationForm').title.focus();
+        }else if(errors.message)
+        {
+            errorSection.innerHTML=errors.message;
+        }else
+        {
+            alert(errors)
+        }
     }
 };

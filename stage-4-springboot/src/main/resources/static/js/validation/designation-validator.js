@@ -1,17 +1,16 @@
 const designationValidator={
 
-    validate : function(frm)
+    validate : function(formData)
     {
-        var nn=frm.title.value.trim();
-        var titleErrorSection=document.getElementById('titleErrorSection');
-        titleErrorSection.innerHTML='';
-        if(nn.length==0)
+        const errors={};
+        if(!formData.title || formData.title.trim().length===0)
         {
-        titleErrorSection.innerHTML='required';
-        frm.title.focus();
-        return false;
+            errors.title='Title is required';
         }
-        return true;
+        return {
+            valid: Object.keys(errors).length===0,
+            errors
+        };
     }
 
 };

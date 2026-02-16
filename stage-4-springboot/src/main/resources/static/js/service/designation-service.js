@@ -28,12 +28,33 @@ headers:{
 },
 body:JSON.stringify(designation)
 });
-if(!response.ok)
+// success case (200 ok)
+if(response.ok)
 {
-const errorBody=await response.text();
-throw new Error(`Server error ${response.status} : ${errorBody}`);
+    return await response.json();
 }
-return await response.json();
+
+    let errorBody;
+    try
+    {
+        errorBody=await response.json();
+    }catch(error)
+    {
+        throw {type:'Server_ERROR',message:response.statusText};
+    }
+
+    if(response.status===400)
+    {
+        throw{
+        type:'VALIDATION',
+        errors:errorBody
+        };
+    }
+    if(response.status===409)
+    {
+        throw {type:'BUSINESS', errors: errorBody};
+    }
+    throw {type:'Server_ERROR',message:"System error "+response.statusText, errors:errorBody};
 }
 
 
