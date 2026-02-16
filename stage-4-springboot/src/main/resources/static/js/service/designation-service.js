@@ -58,17 +58,41 @@ if(response.ok)
 }
 
 
-async update(designation)
+async update(code,designation)
 {
-const response=await fetch(`${this.url}/${designation.code}`,{
+const response=await fetch(`${this.url}/${code}`,{
 method:'PUT',
 headers:{
 'Content-Type':'application/json'
 },
 body:JSON.stringify(designation)
 });
-if(!response.ok) throw new Error('Failed to update designations');
-return await response.json();
+if(response.ok)
+{
+    return await response.json();
+}
+
+    let errorBody;
+    try
+    {
+        errorBody=await response.json();
+    }catch(error)
+    {
+        throw {type:'Server_ERROR',message:response.statusText};
+    }
+
+    if(response.status===400)
+    {
+        throw{
+        type:'VALIDATION',
+        errors:errorBody
+        };
+    }
+    if(response.status===409)
+    {
+        throw {type:'BUSINESS', errors: errorBody};
+    }
+    throw {type:'Server_ERROR',message:"System error "+response.statusText, errors:errorBody};
 }
 
 async delete(code)

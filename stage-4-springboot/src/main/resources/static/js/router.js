@@ -1,5 +1,4 @@
 const mainContent=document.getElementById('main-content');
-const currentModuleCode=null
 
 
 const ACTIVE_CLASS='nav-link.active';
@@ -8,7 +7,6 @@ const HIDDEN_CLASS='nav-link-hidden';
 async function loadModule(moduleName,code=null)
 {
     console.log(`loading module ${moduleName}`);
-    if(code) currentModuleCode=code;
     if(moduleName==='HOME')
     {
         mainContent.innerHTML="<h1>Welcome</h1>"
@@ -31,13 +29,17 @@ async function loadModule(moduleName,code=null)
             window.pages.designations.load();
         }
        }
-//       if(moduleName==='designation-add-form')
-//       {
-//        if(window.pages && window.pages.designations)
-//        {
-//            window.pages.designationAddForm.save();
-//        }
-//       }
+       if(moduleName==='designation-edit-form')
+       {
+        if(window.pages && window.pages.designationEditForm)
+        {
+         if(code!=null)
+          {
+            console.log(`loading designation of this code ${code}`)
+            window.pages.designationEditForm.load(code);
+          }
+        }
+       }
 
         updateNavigation('designations');
         }else
