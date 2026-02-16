@@ -97,11 +97,30 @@ if(response.ok)
 
 async delete(code)
 {
-const response=await fetch(`${this.url}/code`,{
+const response=await fetch(`${this.url}/${code}`,{
 method:'DELETE'
 });
-if(!response.ok) throw new Error('Failed to delete designations');
-return await response.json();
+
+    if(response.status===204)
+    {
+        return
+    }
+
+    let errorBody;
+        try
+        {
+            errorBody=await response.json();
+        }catch(error)
+        {
+            throw {type:'Server_ERROR',message:response.statusText};
+        }
+
+        if(response.status===404 || response.status===409)
+        {
+            throw {type:'BUSINESS', errors: errorBody};
+        }
+        throw {type:'Server_ERROR',message:"System error "+response.statusText, errors:errorBody};
+
 }
 
 }

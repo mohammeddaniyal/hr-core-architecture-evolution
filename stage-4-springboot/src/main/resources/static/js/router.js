@@ -29,17 +29,29 @@ async function loadModule(moduleName,code=null)
             window.pages.designations.load();
         }
        }
-       if(moduleName==='designation-edit-form')
+       else if(moduleName==='designation-edit-form')
        {
         if(window.pages && window.pages.designationEditForm)
         {
          if(code!=null)
           {
             console.log(`loading designation of this code ${code}`)
-            window.pages.designationEditForm.load(code);
+            window.pages.designationEditForm.initEdit(code);
           }
         }
        }
+       else if(moduleName==='designation-delete-confirm')
+       {
+        if(window.pages && window.pages.designationDeleteConfirm)
+        {
+         if(code!=null)
+          {
+            console.log(`loading designation of this code ${code}`)
+            window.pages.designationDeleteConfirm.initDelete(code);
+          }
+        }
+       }
+
 
         updateNavigation('designations');
         }else
