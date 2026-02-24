@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Application</title>
+<title>HR Core | Stage 1 (Servlets)</title>
 <script>
 function validateForm(frm)
 {
@@ -31,7 +31,7 @@ document.getElementById('cancelAdditionForm').submit();
 <div style='width:90hw;height:auto;border:1px solid black'>
 <!-- header starts here -->
 <div style='margin:5px;width:90hw;height:auto;border:1px solid black'>
-<a href='/styleone'index.html'><img src='/styleone/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspThinking Machines</div>
+<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>
 </div>
 
 <!-- header ends here -->
@@ -42,16 +42,16 @@ document.getElementById('cancelAdditionForm').submit();
 <div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
 <b>Designations</b>
 <br>
-<a href='/styleone/employeesView'>Employees</a>
+<a href='/stage1/employeesView'>Employees</a>
 <br><br>
-<a href='/styleone/index.html'>Home</a>
+<a href='/stage1/index.html'>Home</a>
 </div>
 <!-- left panel ends here -->
 
 <!-- right panel starts here -->
 <div style='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
 <h2>Designation (Add Module)</h2>
-<form action='/styleone/addDesignation' onsubmit='return validateForm(this)'>
+<form action='/stage1/addDesignation' onsubmit='return validateForm(this)'>
 Designation
 <input type='text' id='title' name='title' maxlength='35' size='36'>
 <span id='titleErrorSection' style='color:red'></span>
@@ -65,12 +65,12 @@ Designation
 <!-- content-section ends here -->
 <!-- footer starts here -->
 <div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>
-&copy; Thinking Machines 2024
+&copy; HR Core 2026
 <!-- footer ends here -->
 </div>
 
 </div>
 <!-- Main container ends here-->
-<form id='cancelAdditionForm' action='/styleone/designationsView'></form>
+<form id='cancelAdditionForm' action='/stage1/designationsView'></form>
 </body>
 </html>

@@ -23,13 +23,13 @@
   metadata-complete="true">
 
     <description>
-      StyleOne
+    Stage 1 - Servlets Architecture
     </description>
-    <display-name>StyleOne</display-name>
+<display-name>HR Core Stage 1</display-name>
 
 <servlet>
 <servlet-name>DesignationsView</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.DesignationsView</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.DesignationsView</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>DesignationsView</servlet-name>
@@ -38,7 +38,7 @@
 
 <servlet>
 <servlet-name>AddDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.AddDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.AddDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>AddDesignation</servlet-name>
@@ -47,7 +47,7 @@
 
 <servlet>
 <servlet-name>EditDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.EditDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.EditDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>EditDesignation</servlet-name>
@@ -56,7 +56,7 @@
 
 <servlet>
 <servlet-name>UpdateDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.UpdateDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.UpdateDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>UpdateDesignation</servlet-name>
@@ -65,7 +65,7 @@
 
 <servlet>
 <servlet-name>ConfirmDeleteDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.ConfirmDeleteDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.ConfirmDeleteDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>ConfirmDeleteDesignation</servlet-name>
@@ -74,7 +74,7 @@
 
 <servlet>
 <servlet-name>DeleteDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.DeleteDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.DeleteDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>DeleteDesignation</servlet-name>
@@ -83,7 +83,7 @@
 
 <servlet>
 <servlet-name>EmployeesView</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.EmployeesView</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.EmployeesView</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>EmployeesView</servlet-name>
@@ -92,7 +92,7 @@
 
 <servlet>
 <servlet-name>GetEmployeeAddForm</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.GetEmployeeAddForm</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.GetEmployeeAddForm</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GetEmployeeAddForm</servlet-name>
@@ -101,7 +101,7 @@
 
 <servlet>
 <servlet-name>AddEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.AddEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.AddEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>AddEmployee</servlet-name>
@@ -110,7 +110,7 @@
 
 <servlet>
 <servlet-name>ConfirmDeleteEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.ConfirmDeleteEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.ConfirmDeleteEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>ConfirmDeleteEmployee</servlet-name>
@@ -120,7 +120,7 @@
 
 <servlet>
 <servlet-name>DeleteEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.DeleteEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.DeleteEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>DeleteEmployee</servlet-name>
@@ -129,7 +129,7 @@
 
 <servlet>
 <servlet-name>EditEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.EditEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.EditEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>EditEmployee</servlet-name>
@@ -139,7 +139,7 @@
 
 <servlet>
 <servlet-name>UpdateEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.UpdateEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.UpdateEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>UpdateEmployee</servlet-name>
