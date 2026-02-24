@@ -1,0 +1,59 @@
+package io.github.mohammeddaniyal.hr.controller;
+
+import io.github.mohammeddaniyal.hr.dto.EmployeeDTO;
+import io.github.mohammeddaniyal.hr.service.EmployeeService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/api/employees")
+@CrossOrigin(origins = "*")
+public class EmployeeController {
+
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService)
+    {
+        this.employeeService = employeeService;
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<EmployeeDTO> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+            EmployeeDTO createdEmployee = employeeService.add(employeeDTO);
+            return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
+    }
+    @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployees()
+    {
+        List<EmployeeDTO> employees=employeeService.getAll();
+        return ResponseEntity.ok(employees);
+    }
+    @GetMapping("/{employeeId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable String employeeId)
+    {
+        EmployeeDTO employee=employeeService.getByEmployeeId(employeeId);
+        return ResponseEntity.ok(employee);
+    }
+    @PutMapping("/{employeeId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<EmployeeDTO> updateEmployee(
+            @PathVariable String employeeId,
+            @Valid @RequestBody EmployeeDTO employeeDTO) {
+        EmployeeDTO updatedEmployee=employeeService.update(employeeId,employeeDTO);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+    @DeleteMapping("/{employeeId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable String employeeId) {
+        employeeService.delete(employeeId);
+        return ResponseEntity.noContent().build();
+    }
+}
