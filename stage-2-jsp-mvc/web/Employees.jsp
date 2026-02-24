@@ -1,15 +1,15 @@
 <%@taglib uri='WEB-INF/mytags/tmtags.tld' prefix='tm' %>
 <tm:Module name='EMPLOYEE' />
 <jsp:include page='/MasterPageTopSection.jsp' />
-<link rel='stylesheet' type='text/css' href='/styletwo/css/employees.css'>
-<script src='/styletwo/js/Employees.js'></script>
+<link rel='stylesheet' type='text/css' href='/stage2/css/employees.css'>
+<script src='/stage2/js/Employees.js'></script>
 <h4>Employees</h4>
 <div class='employeeGrid'>
 <table border='1' id='employeesGridTable'>
 <thead>
 <tr>
 <th colspan='6' class='employeeGridHeader'>
-<a href='/styletwo/EmployeeAddForm.jsp'>Add Employee</a>
+<a href='/stage2/EmployeeAddForm.jsp'>Add Employee</a>
 </th>
 </tr>
 <tr>

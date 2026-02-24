@@ -1,14 +1,14 @@
 <%@taglib uri='/WEB-INF/mytags/tmtags.tld' prefix='tm' %>
-<jsp:useBean id='employeeBean' scope='request' class='com.thinking.machines.hr.beans.EmployeeBean' />
-<jsp:useBean id='errorBean' scope='request' class='com.thinking.machines.hr.beans.ErrorBean' />
+<jsp:useBean id='employeeBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.EmployeeBean' />
+<jsp:useBean id='errorBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.ErrorBean' />
 <tm:If condition='${employeeBean.dateOfBirth==""}'>
 <jsp:setProperty name='employeeBean' property='dateOfBirth' value='1970-01-01' />
 </tm:If>
 <tm:Module name='EMPLOYEE' />
 <jsp:include page='/MasterPageTopSection.jsp' />
-<script src='/styletwo/js/EmployeeAddForm.js'></script>
+<script src='/stage2/js/EmployeeAddForm.js'></script>
 <h2>Employee (Add Module)</h2>
-<form method='post' action='/styletwo/AddEmployee.jsp' onsubmit='return validateForm(this)'>
+<form method='post' action='/stage2/AddEmployee.jsp' onsubmit='return validateForm(this)'>
 <tm:FormID />
 <table>
 <tr>
@@ -20,7 +20,7 @@
 <td>Designation</td>
 <td><select id='designationCode' name='designationCode'>
 <option value='-1'>&lt;Select Designation&gt;</option>
-<tm:EntityList populatorClass='com.thinking.machines.hr.bl.DesignationBL' populatorMethod='getAll' name='designationBean'>
+<tm:EntityList populatorClass='io.github.mohammeddaniyal.hr.bl.DesignationBL' populatorMethod='getAll' name='designationBean'>
 <option value='${designationBean.code}'>${designationBean.title}</option>
 <tm:If condition='${designationBean.code==employeeBean.designationCode}'>
 <option selected value='${designationBean.code}'>${designationBean.title}</option>
@@ -93,5 +93,5 @@
 </tr>
 </table>
 </form>
-<form id='cancelAdditionForm' action='/styletwo/Employees.jsp'></form>
+<form id='cancelAdditionForm' action='/stage2/Employees.jsp'></form>
 <jsp:include page='/MasterPageBottomSection.jsp' />

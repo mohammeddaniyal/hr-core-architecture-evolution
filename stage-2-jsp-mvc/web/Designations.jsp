@@ -6,7 +6,7 @@
 <thead>
 <tr>
 <th colspan='4' style='text-align:right;padding:5px'>
-<a href='/styletwo/DesignationAddForm.jsp'>Add new Designation</a>
+<a href='/stage2/DesignationAddForm.jsp'>Add new Designation</a>
 </th>
 </tr>
 <tr>
@@ -17,12 +17,12 @@
 </tr>
 </thead>
 <tbody>
-<tm:EntityList populatorClass='com.thinking.machines.hr.bl.DesignationBL' populatorMethod='getAll' name='cool'>
+<tm:EntityList populatorClass='io.github.mohammeddaniyal.hr.bl.DesignationBL' populatorMethod='getAll' name='cool'>
 <tr>
 <td style='text-align:right'>${serialNumber}</td>
 <td>${cool.title}</td>
-<td style='text-align:center'><a href='/styletwo/editDesignation?code=${cool.code}'>Edit</a></td>
-<td style='text-align:center'><a href='/styletwo/confirmDeleteDesignation?code=${cool.code}'>Delete</a></td>
+<td style='text-align:center'><a href='/stage2/editDesignation?code=${cool.code}'>Edit</a></td>
+<td style='text-align:center'><a href='/stage2/confirmDeleteDesignation?code=${cool.code}'>Delete</a></td>
 </tr>
 </tm:EntityList>
 </tbody>

@@ -3,7 +3,7 @@
 <!-- content-section ends here -->
 <!-- footer starts here -->
 <div class='footer'>
-&copy; Thinking Machines 2024
+&copy; HR Core 2026
 <!-- footer ends here -->
 </div>
 </div>

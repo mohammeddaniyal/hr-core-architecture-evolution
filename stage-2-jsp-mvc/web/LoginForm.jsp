@@ -1,24 +1,24 @@
-<jsp:useBean id='errorBean' scope='request' class='com.thinking.machines.hr.beans.ErrorBean' />
+<jsp:useBean id='errorBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.ErrorBean' />
 <!DOCTYPE HTML>
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Application</title>
-<link rel='stylesheet' type='text/css' href='/styletwo/css/styles.css'>
+<title>HR Core | Stage 2 (JSP)</title>
+<link rel='stylesheet' type='text/css' href='/stage2/css/styles.css'>
 </head>
 <body>
 <!-- Main container starts here-->
 <div class='main-container'>
 <!-- header starts here -->
 <div class='header'>
-<a href='/styletwo/index.jsp'><img src='/styletwo/images/logo.png' class='logo'></a><div class='brand-name'>&nbspThinking Machines</div>
+<a href='/stage2/index.jsp'><img src='/stage2/images/logo.png' class='logo'></a><div class='brand-name'>&nbspHR Core</div>
 </div>
 <!-- header ends here -->
 <!-- content-section starts here -->
 <div class='content'>
 <!-- login form section starts here -->
 <div class='loginForm'>
-<form method='post' action='/styletwo/Login.jsp' />
+<form method='post' action='/stage2/Login.jsp' />
 <table border='0'>
 <tr>
 <td colspan='2' align='center'>
@@ -47,7 +47,7 @@
 <!-- content-section ends here -->
 <!-- footer starts here -->
 <div class='footer'>
-&copy; Thinking Machines 2024
+&copy; HR Core 2026
 <!-- footer ends here -->
 </div>
 </div>

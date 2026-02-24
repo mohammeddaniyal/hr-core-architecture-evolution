@@ -1,10 +1,11 @@
 <%@taglib uri='/WEB-INF/mytags/tmtags.tld' prefix='tm' %>
-<jsp:useBean id='employeeBean' scope='request' class='com.thinking.machines.hr.beans.EmployeeBean' />
+<jsp:useBean id='employeeBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.EmployeeBean' />
 <tm:Module name='EMPLOYEE' />
 <jsp:include page='/MasterPageTopSection.jsp' />
-<script src='/styletwo/js/EmployeeEditForm.js'></script>
+<script src='/stage2/js/EmployeeEditForm.js'></script>
 <h2>Employee (Edit Module)</h2>
-<form method='post' action='/styletwo/AddEmployee.jsp' onsubmit='return validateForm(this)'>
+<form method='post' action='/stage2/updateEmployee' onsubmit='return validateForm(this)'>
+    <input type='hidden' id='employeeId' name='employeeId' value='${employeeBean.employeeId}'>
 <tm:FormID />
 <table>
 <tr>
@@ -16,7 +17,7 @@
 <td>Designation</td>
 <td><select id='designationCode' name='designationCode'>
 <option value='-1'>&lt;Select Designation&gt;</option>
-<tm:EntityList populatorClass='com.thinking.machines.hr.bl.DesignationBL' populatorMethod='getAll' name='designationBean'>
+<tm:EntityList populatorClass='io.github.mohammeddaniyal.hr.bl.DesignationBL' populatorMethod='getAll' name='designationBean'>
 <option value='${designationBean.code}'>${designationBean.title}</option>
 <tm:If condition='${designationBean.code==employeeBean.designationCode}'>
 <option selected value='${designationBean.code}'>${designationBean.title}</option>
@@ -55,7 +56,7 @@
 </tr>
 <tr>
 <td>Indian ?</td>
-<tm:If condition='${employeeBean.isIndian}' >
+<tm:If condition='${employeeBean.isIndian==true}' >
 <td><input type='checkbox' id='isIndian' name='isIndian' value='Y' checked>
 </tm:If>
 <tm:If condition='${employeeBean.isIndian==false}' >
@@ -75,16 +76,16 @@
 </tr>
 
 <td>Aadhar Card Number</td>
-<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='10' size='11' value='${employeeBean.aadharCardNumber}'>
+<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='12' size='13' value='${employeeBean.aadharCardNumber}'>
 <span id='aadharCardNumberErrorSection' style='color:red'>${aadharCardNumberError}</span></td>
 </tr>
 
 <tr colspan='2'>
-<td><button type='submit' >Add</button>
+<td><button type='submit' >Update</button>
 &nbsp;&nbsp;
 <button type='button' onclick='cancelUpdation()'>Cancel</button></td>
 </tr>
 </table>
 </form>
-<form id='cancelUpdationForm' action='/styletwo/Employees.jsp'></form>
+<form id='cancelUpdationForm' action='/stage2/Employees.jsp'></form>
 <jsp:include page='/MasterPageBottomSection.jsp' />

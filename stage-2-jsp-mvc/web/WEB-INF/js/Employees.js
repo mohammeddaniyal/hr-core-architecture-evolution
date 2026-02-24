@@ -91,8 +91,8 @@ if(placeHolderFor=="isIndian") cellTemplate.innerHTML=employees[k].isIndian;
 if(placeHolderFor=="basicSalary") cellTemplate.innerHTML=employees[k].basicSalary;
 if(placeHolderFor=="panNumber") cellTemplate.innerHTML=employees[k].panNumber;
 if(placeHolderFor=="aadharCardNumber") cellTemplate.innerHTML=employees[k].aadharCardNumber;
-if(placeHolderFor=="editOption") cellTemplate.innerHTML="<a href='/styletwo/editEmployee?employeeId="+employees[k].employeeId+"'>Edit</a>";
-if(placeHolderFor=="deleteOption") cellTemplate.innerHTML="<a href='/styletwo/confirmDeleteEmployee?employeeId="+employees[k].employeeId+"'>Delete</a>";
+if(placeHolderFor=="editOption") cellTemplate.innerHTML="<a href='/stage2/editEmployee?employeeId="+employees[k].employeeId+"'>Edit</a>";
+if(placeHolderFor=="deleteOption") cellTemplate.innerHTML="<a href='/stage2/confirmDeleteEmployee?employeeId="+employees[k].employeeId+"'>Delete</a>";
 }//inner loop ends
 
 dynamicRow.onclick=createDynamicRowClickHandler(dynamicRow,employees[k].employeeId);

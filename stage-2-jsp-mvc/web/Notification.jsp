@@ -1,5 +1,5 @@
 <%@taglib uri='/WEB-INF/mytags/tmtags.tld' prefix='tm' %>
-<jsp:useBean id='messageBean' scope='request' class='com.thinking.machines.hr.beans.MessageBean' />
+<jsp:useBean id='messageBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.MessageBean' />
 <jsp:include page='/MasterPageTopSection.jsp' />
 <h2>${messageBean.heading}</h2>
 ${messageBean.message}
@@ -8,15 +8,18 @@ ${messageBean.message}
 <table>
 <tr>
 <td>
-<form action='/styletwo/${messageBean.buttonOneAction}'>
-<button>${messageBean.buttonOneText}</button>
+<button type="button"
+        onclick="location.href='${pageContext.request.contextPath}/${messageBean.buttonOneAction}'">
+${messageBean.buttonOneText}
+</button>
 </form>
 </td>
 <tm:If condition='${messageBean.generateTwoButtons}'>
 <td>
-<form action='/styletwo/${messageBean.buttonTwoAction}'>
-<button>${messageBean.buttonTwoText}</button>
-</form>
+<button type="button"
+        onclick="location.href='${pageContext.request.contextPath}/${messageBean.buttonTwoAction}'">
+    ${messageBean.buttonTwoText}
+</button>
 </td>
 </tm:If>
 </tr>
@@ -30,7 +33,7 @@ if(messageBean.getGenerateButtons())
 <table>
 <tr>
 <td>
-<form action='/styletwo/${messageBean.buttonOneAction}'>
+<form action='/stage2/${messageBean.buttonOneAction}'>
 <button>${messageBean.buttonOneText}</button>
 </form>
 </td>

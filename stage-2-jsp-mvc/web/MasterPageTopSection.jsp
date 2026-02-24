@@ -6,20 +6,20 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Application</title>
-<link rel='stylesheet' type='text/css' href='/styletwo/css/styles.css'>
+<title>HR Core | Stage 2 (JSP)</title>
+<link rel='stylesheet' type='text/css' href='/stage2/css/styles.css'>
 </head>
 <body>
 <!-- Main container starts here-->
 <div class='main-container'>
 <!-- header starts here -->
 <div class='header'>
-<a href='/styletwo/index.jsp'><img src='/styletwo/images/logo.png' class='logo'></a>
-<div class='brand-name'>&nbsp;Thinking Machines</div>
+<a href='/stage2/index.jsp'><img src='/stage2/images/logo.png' class='logo'></a>
+<div class='brand-name'>&nbsp;HR Core</div>
 <div class='username'>
-<img src='/styletwo/images/user.png'/>
+<img src='/stage2/images/user.png'/>
 ${username}&nbsp;
-<a href='/styletwo/logout'>Logout</a>
+<a href='/stage2/logout'>Logout</a>
 </div>
 </div><!-- header ends here -->
 <!-- content-section starts here -->
@@ -30,17 +30,17 @@ ${username}&nbsp;
 <b>Designations</b><br>
 </tm:If>
 <tm:If condition='${module!=DESIGNATION}'>
-<a href='/styletwo/Designations.jsp'>Designations</a><br>
+<a href='/stage2/Designations.jsp'>Designations</a><br>
 </tm:If>
 <tm:If condition='${module==EMPLOYEE}'>
 <b>Employees</b><br>
 </tm:If>
 <tm:If condition='${module!=EMPLOYEE}'>
-<a href='/styletwo/Employees.jsp'>Employees</a><br>
+<a href='/stage2/Employees.jsp'>Employees</a><br>
 </tm:If>
 
 <tm:If condition='${module!=HOME}'>
-<a href='/styletwo/index.jsp'>Home</a>
+<a href='/stage2/index.jsp'>Home</a>
 </tm:If>
 </div>
 <!-- left panel ends here -->

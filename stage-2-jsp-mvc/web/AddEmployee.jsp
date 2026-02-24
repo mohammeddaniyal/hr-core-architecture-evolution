@@ -5,7 +5,7 @@
 <tm:FormResubmitted>
 <jsp:forward page='/notifyFormResubmission' />
 </tm:FormResubmitted>
-<jsp:useBean id='employeeBean' scope='request' class='com.thinking.machines.hr.beans.EmployeeBean' />
+<jsp:useBean id='employeeBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.EmployeeBean' />
 <jsp:setProperty name='employeeBean' property='*' />
 <jsp:setProperty name='employeeBean' property='PANNumber' />
 <jsp:forward page='/addEmployee' />
