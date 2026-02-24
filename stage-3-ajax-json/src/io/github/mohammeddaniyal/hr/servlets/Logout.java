@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.servlets;
+package io.github.mohammeddaniyal.hr.servlets;
 import javax.servlet.*;
 import javax.servlet.http.*;
 public class Logout extends HttpServlet

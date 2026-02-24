@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.common;
+package io.github.mohammeddaniyal.hr.common;
 import java.util.*;
 public class Response implements java.io.Serializable
 {

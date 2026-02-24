@@ -1,6 +1,6 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.common.*;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.common.*;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;

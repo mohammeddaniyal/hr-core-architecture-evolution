@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.dl;
+package io.github.mohammeddaniyal.hr.dl;
 public class DAOException extends Exception
 {
 public DAOException(String message)

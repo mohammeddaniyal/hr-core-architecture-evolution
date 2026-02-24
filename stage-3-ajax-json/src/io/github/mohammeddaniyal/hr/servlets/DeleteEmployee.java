@@ -1,11 +1,11 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import io.github.mohammeddaniyal.hr.common.*;
 import com.google.gson.*;
-import com.thinking.machines.hr.common.*;
-public class UpdateDesignation extends HttpServlet
+public class DeleteEmployee extends HttpServlet
 {
 public void doGet(HttpServletRequest request,HttpServletResponse response)
 {
@@ -31,16 +31,17 @@ if(d==null) break;
 sb.append(d);
 }
 String rawData=sb.toString();
+Gson gson=new Gson();
+String employeeId=gson.fromJson(rawData,String.class);
+System.out.println(employeeId);
 PrintWriter pw=response.getWriter();
 response.setContentType("application/json");
 response.setCharacterEncoding("utf-8");
-Gson gson=new Gson();
-DesignationDTO designation=gson.fromJson(rawData,DesignationDTO.class);
-DesignationDAO designationDAO=new DesignationDAO();
 Response responseObject=new Response();
+EmployeeDAO employeeDAO=new EmployeeDAO();
 try
 {
-designationDAO.update(designation);
+employeeDAO.deleteByEmployeeId(employeeId);
 }catch(DAOException daoException)
 {
 responseObject.setSuccess(false);
@@ -57,6 +58,7 @@ pw.print(gson.toJson(responseObject));
 pw.flush();
 }catch(Exception exception)
 {
+System.out.println(exception.getMessage());
 try
 {
 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

@@ -1,5 +1,5 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
@@ -7,7 +7,7 @@ import java.text.*;
 import java.util.*;
 import java.math.*;
 import com.google.gson.*;
-import com.thinking.machines.hr.common.*;
+import io.github.mohammeddaniyal.hr.common.*;
 public class UpdateEmployee extends HttpServlet
 {
 public void doGet(HttpServletRequest request,HttpServletResponse response)

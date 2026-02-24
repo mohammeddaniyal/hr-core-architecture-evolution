@@ -1,11 +1,11 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.common.*;
-import com.google.gson.*;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
+import io.github.mohammeddaniyal.hr.common.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
-public class Login extends HttpServlet
+import com.google.gson.*;
+public class DeleteDesignation extends HttpServlet
 {
 public void doGet(HttpServletRequest request,HttpServletResponse response)
 {
@@ -31,38 +31,25 @@ if(d==null) break;
 sb.append(d);
 }
 String rawData=sb.toString();
-Gson gson=new Gson();
 PrintWriter pw=response.getWriter();
 response.setContentType("application/json");
 response.setCharacterEncoding("utf-8");
-AdministratorDTO administrator=gson.fromJson(rawData,AdministratorDTO.class);
-AdministratorDAO administratorDAO=new AdministratorDAO();
+Gson gson=new Gson();
+int code=gson.fromJson(rawData,int.class);
+DesignationDAO designationDAO=new DesignationDAO();
 Response responseObject=new Response();
-String username=administrator.getUsername();
-String password=administrator.getPassword();
 try
 {
-administrator=administratorDAO.getByUsername(username);
+designationDAO.deleteByCode(code);
 }catch(DAOException daoException)
 {
 responseObject.setSuccess(false);
 responseObject.setResult(null);
-responseObject.setError("Invalid username/password");
+responseObject.setError(daoException.getMessage());
 pw.print(gson.toJson(responseObject));
 pw.flush();
 return;
 }
-if(administrator.getPassword().equals(password)==false)
-{
-responseObject.setSuccess(false);
-responseObject.setResult(null);
-responseObject.setError("Invalid username/password");
-pw.print(gson.toJson(responseObject));
-pw.flush();
-return;
-}
-HttpSession session=request.getSession();
-session.setAttribute("username",username);
 responseObject.setSuccess(true);
 responseObject.setResult(null);
 responseObject.setError(null);
@@ -70,6 +57,7 @@ pw.print(gson.toJson(responseObject));
 pw.flush();
 }catch(Exception exception)
 {
+System.out.println(exception.getMessage());
 try
 {
 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -77,6 +65,7 @@ response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 {
 //do nothing
 }
+
 }
 }
 }

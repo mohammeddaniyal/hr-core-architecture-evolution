@@ -1,14 +1,11 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
-import com.thinking.machines.hr.common.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.common.*;
 import com.google.gson.*;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
-import java.util.*;
-import java.math.*;
-import java.text.*;
-public class GetEmployees extends HttpServlet
+public class GetUsernameInSession extends HttpServlet
 {
 public void doPost(HttpServletRequest request,HttpServletResponse response)
 {
@@ -25,21 +22,23 @@ public void doGet(HttpServletRequest request,HttpServletResponse response)
 try
 {
 PrintWriter pw=response.getWriter();
-response.setContentType("text/plain");
+response.setContentType("application/json");
 response.setCharacterEncoding("utf-8");
-EmployeeDAO employeeDAO=new EmployeeDAO();
-List<EmployeeDTO> employees=null;
-try
-{
-employees=employeeDAO.getAll();
-}catch(DAOException daoException)
-{
-
-}
+HttpSession session=request.getSession();
+String username=(String)session.getAttribute("username");
 Gson gson=new Gson();
 Response responseObject=new Response();
+if(username==null)
+{
+responseObject.setSuccess(false);
+responseObject.setResult(null);
+responseObject.setError(null);
+pw.print(gson.toJson(responseObject));
+pw.flush();
+return;
+}
 responseObject.setSuccess(true);
-responseObject.setResult(employees);
+responseObject.setResult(username);
 responseObject.setError(null);
 pw.print(gson.toJson(responseObject));
 pw.flush();

@@ -1,14 +1,13 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.common.*;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
-import java.util.*;
 import com.google.gson.*;
-public class GetDesignation extends HttpServlet
+import io.github.mohammeddaniyal.hr.common.*;
+public class UpdateDesignation extends HttpServlet
 {
-public void doPost(HttpServletRequest request,HttpServletResponse response)
+public void doGet(HttpServletRequest request,HttpServletResponse response)
 {
 try
 {
@@ -18,38 +17,46 @@ response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 //do nothing
 }
 }
-public void doGet(HttpServletRequest request,HttpServletResponse response)
+public void doPost(HttpServletRequest request,HttpServletResponse response)
 {
 try
 {
-Gson gson=new Gson();
-int code=Integer.parseInt(request.getParameter("code"));
+BufferedReader br=request.getReader();
+StringBuffer sb=new StringBuffer();
+String d;
+while(true)
+{
+d=br.readLine();
+if(d==null) break;
+sb.append(d);
+}
+String rawData=sb.toString();
 PrintWriter pw=response.getWriter();
 response.setContentType("application/json");
 response.setCharacterEncoding("utf-8");
-Response responseObject=new Response();
+Gson gson=new Gson();
+DesignationDTO designation=gson.fromJson(rawData,DesignationDTO.class);
 DesignationDAO designationDAO=new DesignationDAO();
-DesignationDTO designation=null;
+Response responseObject=new Response();
 try
 {
-designation=designationDAO.getByCode(code);
+designationDAO.update(designation);
 }catch(DAOException daoException)
 {
 responseObject.setSuccess(false);
 responseObject.setResult(null);
-responseObject.setError("Invalid code : "+code);
+responseObject.setError(daoException.getMessage());
 pw.print(gson.toJson(responseObject));
 pw.flush();
 return;
 }
 responseObject.setSuccess(true);
-responseObject.setResult(designation);
+responseObject.setResult(null);
 responseObject.setError(null);
 pw.print(gson.toJson(responseObject));
 pw.flush();
 }catch(Exception exception)
 {
-System.out.println(exception.getMessage());
 try
 {
 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

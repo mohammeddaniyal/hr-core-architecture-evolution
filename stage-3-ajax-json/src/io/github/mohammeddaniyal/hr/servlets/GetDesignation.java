@@ -1,13 +1,14 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.common.*;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
-import com.thinking.machines.hr.common.*;
+import java.util.*;
 import com.google.gson.*;
-public class DeleteEmployee extends HttpServlet
+public class GetDesignation extends HttpServlet
 {
-public void doGet(HttpServletRequest request,HttpServletResponse response)
+public void doPost(HttpServletRequest request,HttpServletResponse response)
 {
 try
 {
@@ -17,42 +18,32 @@ response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 //do nothing
 }
 }
-public void doPost(HttpServletRequest request,HttpServletResponse response)
+public void doGet(HttpServletRequest request,HttpServletResponse response)
 {
 try
 {
-BufferedReader br=request.getReader();
-StringBuffer sb=new StringBuffer();
-String d;
-while(true)
-{
-d=br.readLine();
-if(d==null) break;
-sb.append(d);
-}
-String rawData=sb.toString();
 Gson gson=new Gson();
-String employeeId=gson.fromJson(rawData,String.class);
-System.out.println(employeeId);
+int code=Integer.parseInt(request.getParameter("code"));
 PrintWriter pw=response.getWriter();
 response.setContentType("application/json");
 response.setCharacterEncoding("utf-8");
 Response responseObject=new Response();
-EmployeeDAO employeeDAO=new EmployeeDAO();
+DesignationDAO designationDAO=new DesignationDAO();
+DesignationDTO designation=null;
 try
 {
-employeeDAO.deleteByEmployeeId(employeeId);
+designation=designationDAO.getByCode(code);
 }catch(DAOException daoException)
 {
 responseObject.setSuccess(false);
 responseObject.setResult(null);
-responseObject.setError(daoException.getMessage());
+responseObject.setError("Invalid code : "+code);
 pw.print(gson.toJson(responseObject));
 pw.flush();
 return;
 }
 responseObject.setSuccess(true);
-responseObject.setResult(null);
+responseObject.setResult(designation);
 responseObject.setError(null);
 pw.print(gson.toJson(responseObject));
 pw.flush();

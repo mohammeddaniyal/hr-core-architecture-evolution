@@ -1,12 +1,14 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.common.*;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import java.text.*;
 import java.util.*;
+import java.math.*;
+import io.github.mohammeddaniyal.hr.common.*;
 import com.google.gson.*;
-public class GetDesignations extends HttpServlet
+public class GetEmployee extends HttpServlet
 {
 public void doPost(HttpServletRequest request,HttpServletResponse response)
 {
@@ -25,24 +27,32 @@ try
 PrintWriter pw=response.getWriter();
 response.setContentType("application/json");
 response.setCharacterEncoding("utf-8");
+String employeeId=request.getParameter("employeeId");
+SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+EmployeeDAO employeeDAO=new EmployeeDAO();
+EmployeeDTO employee=null;
 Gson gson=new Gson();
-DesignationDAO designationDAO=new DesignationDAO();
-List<DesignationDTO> designations=null;
-
+Response responseObject=new Response();
 try
 {
-designations=designationDAO.getAll();
+employee=employeeDAO.getByEmployeeId(employeeId);
 }catch(DAOException daoException)
 {
+responseObject.setSuccess(false);
+responseObject.setResult(null);
+responseObject.setError(daoException.getMessage());
+pw.print(gson.toJson(responseObject));
+pw.flush();
+return;
 }
-Response responseObject=new Response();
 responseObject.setSuccess(true);
-responseObject.setResult(designations);
+responseObject.setResult(employee);
 responseObject.setError(null);
 pw.print(gson.toJson(responseObject));
 pw.flush();
 }catch(Exception exception)
 {
+System.out.println(exception.getMessage());
 try
 {
 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
