@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Application</title>
+<title>HR Core | Stage 3 (MVC Architecture)</title>
 <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/styles.css'>
 <script>
 function authentication()
@@ -49,7 +49,7 @@ xmlHttpRequest.send(JSON.stringify(administrator));
 <div class='main-container'>
 <!-- header starts here -->
 <div class='header'>
-<a href='${pageContext.request.contextPath}/index.jsp'><img src='${pageContext.request.contextPath}/images/logo.png' class='logo'></a><div class='brand-name'>&nbspThinking Machines</div>
+<a href='${pageContext.request.contextPath}/index.jsp'><img src='${pageContext.request.contextPath}/images/logo.png' class='logo'></a><div class='brand-name'>&nbspHR Core</div>
 </div>
 <!-- header ends here -->
 <!-- content-section starts here -->
@@ -83,7 +83,7 @@ xmlHttpRequest.send(JSON.stringify(administrator));
 <!-- content-section ends here -->
 <!-- footer starts here -->
 <div class='footer'>
-&copy; Thinking Machines 2024
+&copy; HR Core 2026
 <!-- footer ends here -->
 </div>
 </div>

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Application</title>
+<title>HR Core | Stage 3 (MVC Architecture)</title>
 <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/styles.css'>
 <script>
 function guard()
@@ -16,7 +16,7 @@ if(this.status==200)
 var response=JSON.parse(this.responseText);
 if(response.success==true)
 {
-document.getElementById('username').innerHTML=splits[1];
+document.getElementById('username').innerHTML=response.result;
 }else
 if(response.success==false)
 {

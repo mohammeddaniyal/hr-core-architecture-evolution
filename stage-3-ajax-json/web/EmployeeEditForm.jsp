@@ -258,7 +258,7 @@ window.addEventListener('load',populateComboBox);
 </tr>
 
 <td>Aadhar Card Number</td>
-<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='10' size='11'>
+<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='12' size='13'>
 <span id='aadharCardNumberErrorSection' style='color:red'></span></td>
 </tr>
 

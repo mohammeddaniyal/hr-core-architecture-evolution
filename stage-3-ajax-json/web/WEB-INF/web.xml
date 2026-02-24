@@ -22,14 +22,12 @@
   version="4.0"
   metadata-complete="true">
 
-    <description>
-      StyleThree
-    </description>
-    <display-name>StyleThree</display-name>
+    <description>Stage 3 - MVC and AJAX Architecture</description>
+  <display-name>HR Core Stage 3</display-name>
 
 <servlet>
 <servlet-name>GetDesignations</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.GetDesignations</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.GetDesignations</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GetDesignations</servlet-name>
@@ -38,7 +36,7 @@
 
 <servlet>
 <servlet-name>AddDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.AddDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.AddDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>AddDesignation</servlet-name>
@@ -48,7 +46,7 @@
 
 <servlet>
 <servlet-name>UpdateDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.UpdateDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.UpdateDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>UpdateDesignation</servlet-name>
@@ -58,7 +56,7 @@
 
 <servlet>
 <servlet-name>GetDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.GetDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.GetDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GetDesignation</servlet-name>
@@ -67,7 +65,7 @@
 
 <servlet>
 <servlet-name>DeleteDesignation</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.DeleteDesignation</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.DeleteDesignation</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>DeleteDesignation</servlet-name>
@@ -76,7 +74,7 @@
 
 <servlet>
 <servlet-name>GetEmployees</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.GetEmployees</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.GetEmployees</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GetEmployees</servlet-name>
@@ -85,7 +83,7 @@
 
 <servlet>
 <servlet-name>AddEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.AddEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.AddEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>AddEmployee</servlet-name>
@@ -95,7 +93,7 @@
 
 <servlet>
 <servlet-name>GetEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.GetEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.GetEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GetEmployee</servlet-name>
@@ -104,7 +102,7 @@
 
 <servlet>
 <servlet-name>UpdateEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.UpdateEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.UpdateEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>UpdateEmployee</servlet-name>
@@ -113,7 +111,7 @@
 
 <servlet>
 <servlet-name>DeleteEmployee</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.DeleteEmployee</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.DeleteEmployee</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>DeleteEmployee</servlet-name>
@@ -122,7 +120,7 @@
 
 <servlet>
 <servlet-name>Login</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.Login</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.Login</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>Login</servlet-name>
@@ -131,7 +129,7 @@
 
 <servlet>
 <servlet-name>Logout</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.Logout</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.Logout</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>Logout</servlet-name>
@@ -140,7 +138,7 @@
 
 <servlet>
 <servlet-name>GetUsernameInSession</servlet-name>
-<servlet-class>com.thinking.machines.hr.servlets.GetUsernameInSession</servlet-class>
+<servlet-class>io.github.mohammeddaniyal.hr.servlets.GetUsernameInSession</servlet-class>
 </servlet>
 <servlet-mapping>
 <servlet-name>GetUsernameInSession</servlet-name>

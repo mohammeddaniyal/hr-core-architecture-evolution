@@ -109,7 +109,7 @@ var name=employeeAddForm.name.value.trim();
 
 var designationCode=employeeAddForm.designationCode.value;
 var dateOfBirth=new Date(employeeAddForm.dateOfBirth.value);
-var gender=employeeAddForm	.gender.value;
+var gender=employeeAddForm.gender.value;
 
 var isIndian;
 if(employeeAddForm.isIndian.checked==true) isIndian=true;
@@ -168,7 +168,7 @@ xmlHttpRequest.send();
 window.addEventListener('load',populateComboBox);
 </script>
 <span id='notificationSection'></span>
-<span id='employeeAddModule' >
+<span id='employeeAddModule'>
 <h2>Employee (Add Module)</h2>
 <form id='employeeAddForm'>
 <table>
@@ -217,7 +217,7 @@ window.addEventListener('load',populateComboBox);
 </tr>
 
 <td>Aadhar Card Number</td>
-<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='10' size='11'>
+<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='12' size='13'>
 <span id='aadharCardNumberErrorSection' style='color:red'></span></td>
 </tr>
 
