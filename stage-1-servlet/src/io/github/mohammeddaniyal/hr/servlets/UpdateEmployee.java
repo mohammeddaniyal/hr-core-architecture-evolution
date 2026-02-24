@@ -1,37 +1,81 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.util.*;
 import java.text.*;
 import java.math.*;
-public class EditEmployee extends HttpServlet
+public class UpdateEmployee extends HttpServlet
 {
 public void doGet(HttpServletRequest request,HttpServletResponse response)
 {
 try
 {
-String employeeId=request.getParameter("employeeId");
 PrintWriter pw=response.getWriter();
 response.setContentType("text/html");
+
+SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+String employeeId=request.getParameter("employeeId");
+String name=request.getParameter("name");
+int designationCode=Integer.parseInt(request.getParameter("designationCode"));
+Date dateOfBirth=simpleDateFormat.parse(request.getParameter("dateOfBirth"));
+String gender=request.getParameter("gender");
+String isIndian=request.getParameter("isIndian");
+if(isIndian==null) isIndian="N";
+BigDecimal basicSalary=new BigDecimal(request.getParameter("basicSalary"));
+String panNumber=request.getParameter("panNumber");
+String aadharCardNumber=request.getParameter("aadharCardNumber");
+
+
+boolean designationCodeExists=false;
+boolean panNumberExists=false;
+boolean aadharCardNumberExists=false;
+EmployeeDTO employee;
 DesignationDAO designationDAO=new DesignationDAO();
 EmployeeDAO employeeDAO;
 employeeDAO=new EmployeeDAO();
-EmployeeDTO employee=null;
+
+
 try
 {
-employee=employeeDAO.getByEmployeeId(employeeId);
-}catch(DAOException daoException)
+
+if(employeeDAO.employeeIdExists(employeeId)==false)
 {
 sendBackView(response);
 return;
 }
+
+designationCodeExists=designationDAO.designationCodeExists(designationCode);
+
+try
+{
+employee=employeeDAO.getByPANNumber(panNumber);
+if(employee.getEmployeeId().equalsIgnoreCase(employeeId)==false)panNumberExists=true;
+}catch(DAOException daoException)
+{
+panNumberExists=false;
+}
+
+try
+{
+employee=employeeDAO.getByAadharCardNumber(aadharCardNumber);
+if(employee.getEmployeeId().equalsIgnoreCase(employeeId)==false)aadharCardNumberExists=true;
+}catch(DAOException daoException)
+{
+aadharCardNumberExists=false;
+}
+
+
+if(designationCodeExists==false || panNumberExists==true || aadharCardNumberExists==true)
+{
+
+
 pw.println("<!DOCTYPE HTML>");
 pw.println("<html lang='en'>");
 pw.println("<head>");
 pw.println("<meta charset='utf-8'>");
-pw.println("<title>HR Application</title>");
+pw.println("<title>HR Core | Stage 1 (Servlets)</title>");
 pw.println("<script>");
 pw.println("function validateForm(frm)");
 pw.println("{");
@@ -158,7 +202,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/styleone'index.html'><img src='/styleone/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspThinking Machines</div>");
+pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -167,23 +211,23 @@ pw.println("<div style='width:90hw;height:70vh;margin:5px;border:1px solid white
 
 pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
-pw.println("<a href='/styleone/designationsView'>Designations</a>");
+pw.println("<a href='/stage1/designationsView'>Designations</a>");
 pw.println("<br>");
 pw.println("<b>Employees</b>");
 pw.println("<br><br>");
-pw.println("<a href='/styleone/index.html'>Home</a>");
+pw.println("<a href='/stage1/index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 pw.println("");
 pw.println("<!-- right panel starts here -->");
 pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
-pw.println("<h2>Employee (Edit Module)</h2>");
-pw.println("<form method='post' action='/styleone/updateEmployee' onsubmit='return validateForm(this)'>");
+pw.println("<h2>Employee (Update Module)</h2>");
+pw.println("<form method='post' action='/stage1/updateEmployee' onsubmit='return validateForm(this)'>");
 pw.println("<input type='hidden' id='employeeId' name='employeeId' value='"+employeeId+"'>");
 pw.println("<table>");
 pw.println("<tr>");
 pw.println("<td>Name</td>");
-pw.println("<td><input type='text' id='name' name='name' maxlength='50' size='51' value='"+employee.getName()+"'>");
+pw.println("<td><input type='text' id='name' name='name' maxlength='50' size='51' value='"+name+"'>");
 pw.println("<span id='nameErrorSection' style='color:red'></span></td>");
 pw.println("</tr>");
 pw.println("<tr>");
@@ -195,7 +239,6 @@ pw.println("<option value='-1'>&lt;Select Designation&gt;</option>");
 List<DesignationDTO> designations;
 int code;
 designations=designationDAO.getAll();
-int designationCode=employee.getDesignationCode();
 for(DesignationDTO designation:designations)
 {
 code=designation.getCode();
@@ -208,14 +251,20 @@ else
 pw.println("<option selected value='"+code+"'>"+designation.getTitle()+"</option>");
 }
 }
+if(designationCodeExists)
+{
 pw.println("</select><span id='designationCodeErrorSection' style='color:red'></span></td>");
+}
+else
+{
+pw.println("</select><span id='designationCodeErrorSection' style='color:red'>Invalid Designation</span></td>");
+}
 pw.println("</td>");
 
 pw.println("</tr>");
 pw.println("<tr>");
-SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
 pw.println("<td>Date Of Birth</td>");
-pw.println("<td><input type='Date' id='dateOfBirth' name='dateOfBirth' value='"+simpleDateFormat.format(employee.getDateOfBirth())+"'>");
+pw.println("<td><input type='Date' id='dateOfBirth' name='dateOfBirth' value='"+simpleDateFormat.format(dateOfBirth)+"'>");
 pw.println("<span id='dateOfBirthErrorSection' style='color:red'></span></td>");
 pw.println("</tr>");
 pw.println("");
@@ -223,7 +272,6 @@ pw.println("");
 pw.println("<tr>");
 pw.println("<td>Gender</td>");
 pw.println("<td>");
-String gender=employee.getGender();
 if(gender.equals("M"))
 {
 pw.println("<input checked type='radio' id='male' name='gender' value='M'>Male");
@@ -247,7 +295,7 @@ pw.println("</tr>");
 pw.println("<tr>");
 pw.println("<td>Indian ?</td>");
 pw.println("<td>");
-if(employee.getIsIndian())
+if(isIndian.equals("Y"))
 {
 pw.println("<input checked type='checkbox' id='isIndian' name='isIndian' value='Y'>");
 }
@@ -257,21 +305,36 @@ pw.println("<input type='checkbox' id='isIndian' name='isIndian' value='Y'>");
 }
 pw.println("<td><span id='isIndianErrorSection' style='color:red'></span></td>");
 pw.println("</tr>");
-BigDecimal basicSalary=employee.getBasicSalary();
+pw.println("");
 pw.println("<td>Basic Salary</td>");
 pw.println("<td><input type='text' style='text-align:right' id='basicSalary' name='basicSalary' value='"+basicSalary.toPlainString()+"'>");
 pw.println("<span id='basicSalaryErrorSection' style='color:red'></span></td>");
 pw.println("</tr>");
-String panNumber=employee.getPANNumber();
+pw.println("");
 pw.println("<td>PAN Number</td>");
 pw.println("<td><input type='text' id='panNumber' name='panNumber' maxlength='10' size='11' value='"+panNumber+"'>");
+if(panNumberExists)
+{
+pw.println("<span id='panNumberErrorSection' style='color:red'>PAN Number exists.</span></td>");
+}
+else
+{
 pw.println("<span id='panNumberErrorSection' style='color:red'></span></td>");
+}
 pw.println("</tr>");
-String aadharCardNumber=employee.getAadharCardNumber();
+pw.println("");
 pw.println("<td>Aadhar Card Number</td>");
 pw.println("<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='10' size='11' value='"+aadharCardNumber+"'>");
+if(aadharCardNumberExists)
+{
+pw.println("<span id='aadharCardNumberErrorSection' style='color:red'>Aadhar card number exists.</span></td>");
+}
+else
+{
 pw.println("<span id='aadharCardNumberErrorSection' style='color:red'></span></td>");
+}
 pw.println("</tr>");
+pw.println("");
 pw.println("<tr colspan='2'>");
 pw.println("<td><button type='submit' >Update</button>");
 pw.println("&nbsp;&nbsp;");
@@ -285,16 +348,92 @@ pw.println("</div>");
 pw.println("<!-- content-section ends here -->");
 pw.println("<!-- footer starts here -->");
 pw.println("<div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
-pw.println("&copy; Thinking Machines 2024");
+pw.println("&copy; HR Core 2026");
 pw.println("<!-- footer ends here -->");
 pw.println("</div>");
 pw.println("");
 pw.println("</div>");
 pw.println("<!-- Main container ends here-->");
-pw.println("<form id='cancelUpdateForm' action='/styleone/employeesView'></form>");
+pw.println("<form id='cancelUpdateForm' action='/stage1/employeesView'></form>");
 pw.println("</body>");
 pw.println("</html>");
-}catch(Exception exception)
+return;
+}
+}catch(DAOException daoException)
+{
+System.out.println(daoException.getMessage());
+}
+EmployeeDTO employeeDTO=new EmployeeDTO();
+employeeDTO.setEmployeeId(employeeId);
+employeeDTO.setName(name);
+employeeDTO.setDesignationCode(designationCode);
+employeeDTO.setDateOfBirth(dateOfBirth);
+employeeDTO.setGender(gender);
+employeeDTO.setIsIndian(isIndian.equals("Y"));
+employeeDTO.setBasicSalary(basicSalary);
+employeeDTO.setPANNumber(panNumber);
+employeeDTO.setAadharCardNumber(aadharCardNumber);
+
+
+employeeDAO.update(employeeDTO);
+
+pw.println("<!DOCTYPE HTML>");
+pw.println("<html lang='en'>");
+pw.println("<head>");
+pw.println("<meta charset='utf-8'>");
+pw.println("<title>HR Core | Stage 1 (Servlets)</title>");
+pw.println("</head>");
+pw.println("<body>");
+pw.println("<!-- Main container starts here-->");
+
+pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
+pw.println("<!-- header starts here -->");
+pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
+pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("</div>");
+
+pw.println("<!-- header ends here -->");
+pw.println("<!-- content-section starts here -->");
+pw.println("<div style='width:90hw;height:70vh;margin:5px;border:1px solid white'>");
+
+pw.println("<!-- left panel starts here -->");
+pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
+pw.println("<b>Designations</b>");
+pw.println("<br>");
+pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<br><br>");
+pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("</div>");
+pw.println("<!-- left panel ends here -->");
+
+pw.println("<!-- right panel starts here -->");
+pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
+pw.println("<h3>Notification!</h3>");
+pw.println("<b>Employee Updated</b>");
+pw.println("<br><br>");
+pw.println("<form action='/stage1/employeesView'>");
+pw.println("<button type='submit'>Ok</button>");
+pw.println("</form>");
+pw.println("</div>");
+pw.println("<!-- right panel ends here -->");
+pw.println("</div>");
+pw.println("<!-- content-section ends here -->");
+pw.println("<!-- footer starts here -->");
+pw.println("<div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
+pw.println("&copy; HR Core 2026");
+pw.println("<!-- footer ends here -->");
+pw.println("</div>");
+
+pw.println("</div>");
+pw.println("<!-- Main container ends here-->");
+pw.println("</body>");
+pw.println("</html>");
+}catch(DAOException daoException)
+{
+System.out.println(daoException.getMessage());
+//recreate form with error message at top
+}
+catch(Exception exception)
 {
 System.out.println(exception.getMessage());
 }
@@ -315,7 +454,7 @@ pw.println("<!DOCTYPE HTML>");
 pw.println("<html lang='en'>");
 pw.println("<head>");
 pw.println("<meta charset='utf-8'>");
-pw.println("<title>HR Application</title>");
+pw.println("<title>HR Core | Stage 1 (Servlets)</title>");
 pw.println("<script>");
 pw.println("function Employee()");
 pw.println("{");
@@ -395,18 +534,18 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/styleone/index.html'><img src='/styleone/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspThinking Machines</div>");
+pw.println("<a href='/stage1/index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 pw.println("<!-- header ends here -->");
 pw.println("<!-- content-section starts here -->");
 pw.println("<div style='width:90hw;height:auto;margin:5px;border:1px solid white'>");
 pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
-pw.println("<a href='/styleone/designationsView'>Designations</a>");
+pw.println("<a href='/stage1/designationsView'>Designations</a>");
 pw.println("<br>");
 pw.println("<b>Employees</b>");
 pw.println("<br><br>");
-pw.println("<a href='/styleone/index.html'>Home</a>");
+pw.println("<a href='/stage1/index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 pw.println("<!-- right panel starts here -->");
@@ -417,7 +556,7 @@ pw.println("<table border='1'>");
 pw.println("<thead>");
 pw.println("<tr>");
 pw.println("<th colspan='6' style='text-align:right;padding:5px'>");
-pw.println("<a href='/styleone/getEmployeeAddForm'>Add Employee</a>");
+pw.println("<a href='/stage1/getEmployeeAddForm'>Add Employee</a>");
 pw.println("</th>");
 pw.println("</tr>");
 pw.println("<tr>");
@@ -441,8 +580,8 @@ pw.println("<td style='text-align:right'>"+sno+".</td>");
 pw.println("<td>"+employeeId+"</td>");
 pw.println("<td>"+employeeDTO.getName()+"</td>");
 pw.println("<td>"+employeeDTO.getDesignation()+"</td>");
-pw.println("<td style='text-align:center'><a href='/styleone/editEmployee?employeeId="+employeeId+"'>Edit</a></td>");
-pw.println("<td style='text-align:center'><a href='/styleone/confirmDeleteEmployee?employeeId="+employeeId+"'>Delete</a></td>");
+pw.println("<td style='text-align:center'><a href='/stage1/editEmployee?employeeId="+employeeId+"'>Edit</a></td>");
+pw.println("<td style='text-align:center'><a href='/stage1/confirmDeleteEmployee?employeeId="+employeeId+"'>Delete</a></td>");
 pw.println("</tr>");
 }
 pw.println("</tbody>");
@@ -475,7 +614,7 @@ pw.println("</div>");
 pw.println("<!-- content-section ends here -->");
 pw.println("<!-- footer starts here -->");
 pw.println("<div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
-pw.println("&copy; Thinking Machines 2024");
+pw.println("&copy; HR Core 2026");
 pw.println("<!-- footer ends here -->");
 pw.println("</div>");
 pw.println("</div>");
@@ -487,6 +626,5 @@ pw.println("</html>");
 {
 System.out.println(exception.getMessage());
 }
-
 }
 }

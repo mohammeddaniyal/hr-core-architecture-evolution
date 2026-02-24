@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.dl;
+package io.github.mohammeddaniyal.hr.dl;
 import java.math.*;
 public class EmployeeDTO implements java.io.Serializable,Comparable<EmployeeDTO>
 {

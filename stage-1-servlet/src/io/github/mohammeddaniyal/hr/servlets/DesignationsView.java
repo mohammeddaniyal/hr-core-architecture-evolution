@@ -1,5 +1,5 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
@@ -25,14 +25,14 @@ pw.println("<!DOCTYPE HTML>");
 pw.println("<html lang='en'>");
 pw.println("<head>");
 pw.println("<meta charset='utf-8'>");
-pw.println("<title>HR Application</title>");
+pw.println("<title>HR Core | Stage 1 (Servlets)</title>");
 pw.println("</head>");
 pw.println("<body>");
 pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/styleone/index.html'><img src='/styleone/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspThinking Machines</div>");
+pw.println("<a href='/stage1/index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -43,9 +43,9 @@ pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
 pw.println("<b>Designations</b>");
 pw.println("<br>");
-pw.println("<a href='/styleone/employeesView'>Employees</a>");
+pw.println("<a href='/stage1/employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/styleone/index.html'>Home</a>");
+pw.println("<a href='/stage1/index.html'>Home</a>");
 
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
@@ -58,7 +58,7 @@ pw.println("<table border='1'>");
 pw.println("<thead>");
 pw.println("<tr>");
 pw.println("<th colspan='4' style='text-align:right;padding:5px'>");
-pw.println("<a href='/styleone/AddDesignation.html'>Add new Designation</a>");
+pw.println("<a href='/stage1/AddDesignation.html'>Add new Designation</a>");
 pw.println("</th>");
 pw.println("</tr>");
 pw.println("<tr>");
@@ -84,8 +84,8 @@ title=designationDTO.getTitle();
 pw.println("<tr>");
 pw.println("<td style='text-align:right'>"+sno+".</td>");
 pw.println("<td>"+title+"</td>");
-pw.println("<td style='text-align:center'><a href='/styleone/editDesignation?code="+code+"'>Edit</a></td>");
-pw.println("<td style='text-align:center'><a href='/styleone/confirmDeleteDesignation?code="+code+"'>Delete</a></td>");
+pw.println("<td style='text-align:center'><a href='/stage1/editDesignation?code="+code+"'>Edit</a></td>");
+pw.println("<td style='text-align:center'><a href='/stage1/confirmDeleteDesignation?code="+code+"'>Delete</a></td>");
 pw.println("</tr>");
 }
 
@@ -97,7 +97,7 @@ pw.println("</div>");
 pw.println("<!-- content-section ends here -->");
 pw.println("<!-- footer starts here -->");
 pw.println("<div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
-pw.println("&copy; Thinking Machines 2024");
+pw.println("&copy; HR Core 2026");
 pw.println("<!-- footer ends here -->");
 pw.println("</div>");
 

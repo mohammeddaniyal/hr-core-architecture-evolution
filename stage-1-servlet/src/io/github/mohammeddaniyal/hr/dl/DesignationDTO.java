@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.dl;
+package io.github.mohammeddaniyal.hr.dl;
 public class DesignationDTO implements java.io.Serializable,Comparable<DesignationDTO>
 {
 private int code;

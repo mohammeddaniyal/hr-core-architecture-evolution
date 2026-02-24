@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.dl;
+package io.github.mohammeddaniyal.hr.dl;
 import java.sql.*;
 import java.util.*;
 public class DesignationDAO

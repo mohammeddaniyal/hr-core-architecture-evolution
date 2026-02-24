@@ -1,4 +1,4 @@
-package com.thinking.machines.hr.dl;
+package io.github.mohammeddaniyal.hr.dl;
 import java.util.*;
 import java.math.*;
 import java.sql.*;

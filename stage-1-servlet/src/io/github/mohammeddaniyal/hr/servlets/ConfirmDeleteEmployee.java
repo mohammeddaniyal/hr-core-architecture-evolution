@@ -1,14 +1,132 @@
-package com.thinking.machines.hr.servlets;
-import com.thinking.machines.hr.dl.*;
-import java.sql.*;
+package io.github.mohammeddaniyal.hr.servlets;
+import io.github.mohammeddaniyal.hr.dl.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.io.*;
 import java.text.*;
+import java.io.*;
+import java.sql.*;
 import java.util.*;
-public class EmployeesView extends HttpServlet
+public class ConfirmDeleteEmployee extends HttpServlet
 {
 public void doGet(HttpServletRequest request,HttpServletResponse response)
+{
+PrintWriter pw=null;
+try
+{
+String employeeId=request.getParameter("employeeId");
+EmployeeDAO employeeDAO=new EmployeeDAO();
+EmployeeDTO employeeDTO=employeeDAO.getByEmployeeId(employeeId);
+pw=response.getWriter();
+response.setContentType("text/html");
+
+
+pw.println("<!DOCTYPE HTML>");
+pw.println("<html lang='en'>");
+pw.println("<head>");
+pw.println("<meta charset='utf-8'>");
+pw.println("<title>HR Core | Stage 1 (Servlets)</title>");
+pw.println("<script>");
+pw.println("function cancelDeleting()");
+pw.println("{");
+pw.println("document.getElementById('cancelDeletingForm').submit();");
+pw.println("}");
+pw.println("</script>");
+pw.println("</head>");
+pw.println("<body>");
+pw.println("<!-- Main container starts here-->");
+pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
+pw.println("<!-- header starts here -->");
+pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
+pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("</div>");
+pw.println("<!-- header ends here -->");
+pw.println("<!-- content-section starts here -->");
+pw.println("<div style='width:90hw;height:70vh;margin:5px;border:1px solid white'>");
+pw.println("<!-- left panel starts here -->");
+pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
+pw.println("<a href='/stage1/designationsView'>Designations</a>");
+pw.println("<br>");
+pw.println("<b>Employees</b>");
+pw.println("<br><br>");
+pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("</div>");
+pw.println("<!-- left panel ends here -->");
+pw.println("<!-- right panel starts here -->");
+pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
+pw.println("<h2>Designation (Delete Module)</h2>");
+pw.println("<form method='post' action='/stage1/deleteEmployee' onsubmit='return validateForm(this)'>");
+pw.println("<input type='hidden' id='employeeId' name='employeeId' value='"+employeeId+"'>");
+pw.println("Name : ");
+pw.println("<b>"+employeeDTO.getName()+"</b><br>");
+pw.println("Designation : ");
+pw.println("<b>"+employeeDTO.getDesignation()+"</b><br>");
+
+SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
+pw.println("Date Of Birth : ");
+pw.println("<b>"+simpleDateFormat.format(employeeDTO.getDateOfBirth())+"</b><br>");
+pw.println("Gender : ");
+if(employeeDTO.getGender().equals("M"))
+{
+pw.println("<b>Male</b><br>");
+}
+else
+{
+pw.println("<b>Female</b><br>");
+}
+pw.println("Nationality Indian : ");
+if(employeeDTO.getIsIndian())
+{
+pw.println("<b>Indian</b><br>");
+}
+else
+{
+pw.println("<b>Not an Indian</b><br>");
+}
+pw.println("Basic Salary : ");
+pw.println("<b>"+employeeDTO.getBasicSalary().toPlainString()+"</b><br>");
+
+pw.println("PAN Number : ");
+pw.println("<b>"+employeeDTO.getPANNumber()+"</b><br>");
+
+pw.println("Aadhar Card Number : ");
+pw.println("<b>"+employeeDTO.getAadharCardNumber()+"</b><br><br>");
+
+pw.println("Are you sure you want to delete this employee?<br><br>");
+pw.println("<button type='submit' >Yes</button>");
+pw.println("<button type='button' onclick='cancelDeleting()'>No</button>");
+pw.println("</form>");
+pw.println("</div>");
+pw.println("<!-- right panel ends here -->");
+pw.println("</div>");
+pw.println("<!-- content-section ends here -->");
+pw.println("<!-- footer starts here -->");
+pw.println("<div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
+pw.println("&copy; HR Core 2026");
+pw.println("<!-- footer ends here -->");
+pw.println("</div>");
+pw.println("</div>");
+pw.println("<!-- Main container ends here-->");
+pw.println("<form id='cancelDeletingForm' action='/stage1/employeesView'></form>");
+pw.println("</body>");
+pw.println("</html>");
+
+
+
+
+}catch(DAOException daoException)
+{
+sendBackView(response);
+}
+catch(Exception exception)
+{
+System.out.println(exception.getMessage());
+}
+}
+public void doPost(HttpServletRequest request,HttpServletResponse response)
+{
+doGet(request,response);
+}
+private void sendBackView(HttpServletResponse response)
 {
 try
 {
@@ -20,7 +138,7 @@ pw.println("<!DOCTYPE HTML>");
 pw.println("<html lang='en'>");
 pw.println("<head>");
 pw.println("<meta charset='utf-8'>");
-pw.println("<title>HR Application</title>");
+pw.println("<title>HR Core | Stage 1 (Servlets)</title>");
 pw.println("<script>");
 pw.println("function Employee()");
 pw.println("{");
@@ -100,18 +218,18 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/styleone/index.html'><img src='/styleone/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspThinking Machines</div>");
+pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 pw.println("<!-- header ends here -->");
 pw.println("<!-- content-section starts here -->");
 pw.println("<div style='width:90hw;height:auto;margin:5px;border:1px solid white'>");
 pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
-pw.println("<a href='/styleone/designationsView'>Designations</a>");
+pw.println("<a href='/stage1/designationsView'>Designations</a>");
 pw.println("<br>");
 pw.println("<b>Employees</b>");
 pw.println("<br><br>");
-pw.println("<a href='/styleone/index.html'>Home</a>");
+pw.println("<a href='/stage1/index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 pw.println("<!-- right panel starts here -->");
@@ -122,7 +240,7 @@ pw.println("<table border='1'>");
 pw.println("<thead>");
 pw.println("<tr>");
 pw.println("<th colspan='6' style='text-align:right;padding:5px'>");
-pw.println("<a href='/styleone/getEmployeeAddForm'>Add Employee</a>");
+pw.println("<a href='/stage1/getEmployeeAddForm'>Add Employee</a>");
 pw.println("</th>");
 pw.println("</tr>");
 pw.println("<tr>");
@@ -146,8 +264,8 @@ pw.println("<td style='text-align:right'>"+sno+".</td>");
 pw.println("<td>"+employeeId+"</td>");
 pw.println("<td>"+employeeDTO.getName()+"</td>");
 pw.println("<td>"+employeeDTO.getDesignation()+"</td>");
-pw.println("<td style='text-align:center'><a href='/styleone/editEmployee?employeeId="+employeeId+"'>Edit</a></td>");
-pw.println("<td style='text-align:center'><a href='/styleone/confirmDeleteEmployee?employeeId="+employeeId+"'>Delete</a></td>");
+pw.println("<td style='text-align:center'><a href='/stage1/editEmployee?employeeId="+employeeId+"'>Edit</a></td>");
+pw.println("<td style='text-align:center'><a href='/stage1/confirmDeleteEmployee?employeeId="+employeeId+"'>Delete</a></td>");
 pw.println("</tr>");
 }
 pw.println("</tbody>");
@@ -180,21 +298,16 @@ pw.println("</div>");
 pw.println("<!-- content-section ends here -->");
 pw.println("<!-- footer starts here -->");
 pw.println("<div style='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
-pw.println("&copy; Thinking Machines 2024");
+pw.println("&copy; HR Core 2026");
 pw.println("<!-- footer ends here -->");
 pw.println("</div>");
 pw.println("</div>");
 pw.println("<!-- Main container ends here-->");
 pw.println("</body>");
 pw.println("</html>");
-
 }catch(Exception exception)
 {
 System.out.println(exception.getMessage());
 }
-}
-public void doPost(HttpServletRequest request,HttpServletResponse response)
-{
-doGet(request,response);
 }
 }
