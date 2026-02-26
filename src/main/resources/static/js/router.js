@@ -67,6 +67,42 @@ if(push)
     {
         let username=sessionStorage.getItem('username');
         mainContent.innerHTML=`<h1>Welcome ${username}</h1>`;
+        console.log('Loaded');
+        console.log(typeof XRay !== 'undefined');
+        if(typeof XRay !== 'undefined')
+        {
+            console.log('here');
+                            XRay.init({
+                                title: "Stage 4: Single Page Application (SPA)",
+                                module: "Application Entry (Vanilla JS Router + RBAC)",
+
+                                impact: [
+                                    "History API Routing: window.history.pushState enables seamless URL navigation without page reloads.",
+                                    "Dynamic Module Loading: HTML fragments are fetched asynchronously and injected into the 'main-content' div.",
+                                    "REST Authentication Check: Initial load calls /api/auth/me to verify session and retrieve user roles.",
+                                    "Client-Side RBAC: User roles stored in sessionStorage and injected as body classes (e.g., 'role-ADMIN') to conditionally hide UI elements.",
+                                    "Stateless Navigation: popstate event listener ensures the browser's Back/Forward buttons work perfectly within the SPA."
+                                ],
+
+                                successFlow: [
+                                    { location: "client",   type: "request",  message: "1. Browser loads index.html and executes router.js." },
+                                    { location: "client",   type: "request",  message: "2. fetch('/api/auth/me') triggers GET request to Spring Boot." },
+                                    { location: "server",   type: "process",  message: "3. UserController checks SecurityContextHolder and returns UserDTO as JSON." },
+                                    { location: "client",   type: "process",  message: "4. JS saves user role to sessionStorage and appends CSS class to <body>." },
+                                    { location: "client",   type: "process",  message: "5. initRouter() evaluates window.location.pathname and loads the default/HOME module." },
+                                    { location: "client",   type: "response", message: "6. UI is rendered without a full page refresh." }
+                                ],
+
+                                errorFlow: [
+                                    { location: "client",   type: "request",  message: "1. Unauthenticated user attempts to load index.html." },
+                                    { location: "server",   type: "error",    message: "2. Spring Security blocks access to /api/auth/me, returning 401 Unauthorized or 403 Forbidden." },
+                                    { location: "client",   type: "process",  message: "3. fetch() promise resolves without response.ok." },
+                                    { location: "client",   type: "response", message: "4. JS catches failure and executes window.location.href = '/login'." }
+                                ]
+                            });
+
+
+        }
         updateNavigation(moduleName);
         return;
     }

@@ -30,6 +30,38 @@ load: function(params)
 // Mode Setups
 setupAdd: function()
 {
+
+    XRay.init({
+        title: "Stage 4: Asynchronous Mutation",
+        module: "Add Designation (REST POST + Global Exception Handling)",
+
+        impact: [
+            "RESTful POST: Data transmitted as application/json to a strictly mapped @PostMapping endpoint.",
+            "Header-Based CSRF: X-XSRF-TOKEN extracted from cookies and attached to fetch() headers for secure API mutation.",
+            "JPA Validation: Duplicate checks performed cleanly via repository.existsByTitle().",
+            "Centralized Error Mapping: GlobalExceptionHandler translates DataConflictException into HTTP 409 and Validation errors into HTTP 400.",
+            "DOM-Only State Updates: Success and error notifications replace the form container instantly without any page navigation."
+        ],
+
+        successFlow: [
+            { location: "client",   type: "request",  message: "1. User submits form. JS intercepts and validates via designationValidator." },
+            { location: "client",   type: "request",  message: "2. Fetch API sends POST /api/designations with JSON body and CSRF header." },
+            { location: "server",   type: "process",  message: "3. Spring Controller validates DTO (@Valid). Passes to Service layer." },
+            { location: "database", type: "process",  message: "4. JPA Repository executes INSERT after confirming title uniqueness." },
+            { location: "server",   type: "response", message: "5. Controller returns HTTP 201 Created with saved DTO." },
+            { location: "client",   type: "response", message: "6. JS clears the form module and renders the Success Notification inline." }
+        ],
+
+        errorFlow: [
+            { location: "client",   type: "request",  message: "1. User submits a designation title that already exists." },
+            { location: "server",   type: "error",    message: "2. DesignationServiceImpl throws DataConflictException." },
+            { location: "server",   type: "process",  message: "3. GlobalExceptionHandler intercepts exception and maps it to a Map<String, String>." },
+            { location: "server",   type: "response", message: "4. API returns HTTP 409 Conflict with JSON error payload." },
+            { location: "client",   type: "process",  message: "5. JS designationService evaluates status code and throws {type: 'BUSINESS'}." },
+            { location: "client",   type: "response", message: "6. JS catch block routes error to showError(), displaying inline red text." }
+        ]
+    });
+
     document.getElementById('formTitle').innerText='Designation (Add Form)';
     const btn=document.getElementById('submitBtn');
     btn.textContent='Add';
