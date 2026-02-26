@@ -4,6 +4,39 @@
     <meta charset='utf-8'>
     <title>HR Core | Stage 4 (Spring Boot API) - Login</title>
     <link rel='stylesheet' type='text/css' href='/css/styles.css'>
+    <link rel='stylesheet' type='text/css' href='/css/xray.css'>
+    <script src="/js/xray.js"></script>
+    <script>
+        XRay.init({
+            title: "Stage 4: Spring Boot API & SPA",
+            module: "Login (Spring Security + CSRF + Session Init)",
+
+            impact: [
+                "Spring Security Interception: Authentication handled by Spring's built-in formLogin filter, bypassing custom servlets.",
+                "CSRF Protection: JavaScript extracts XSRF-TOKEN from cookies and injects it as a hidden form input before submission.",
+                "Synchronous POST Fallback: Login uses a traditional form submission, not a REST API, ensuring standard browser session establishment.",
+                "URL-Based Error State: Error feedback handled by detecting '?error=true' in the URL rather than JSON parsing.",
+                "BCrypt Encoding: Passwords matched securely via UserDetailsServiceImpl."
+            ],
+
+            successFlow: [
+                { location: "client",   type: "request",  message: "1. User enters credentials. DOMContentLoaded listener intercepts submit event." },
+                { location: "client",   type: "process",  message: "2. JS parses document.cookie, extracts XSRF-TOKEN, and appends hidden '_csrf' input." },
+                { location: "client",   type: "request",  message: "3. Browser submits synchronous POST request to /login." },
+                { location: "server",   type: "process",  message: "4. Spring Security validates credentials via UserDetailsServiceImpl." },
+                { location: "server",   type: "response", message: "5. Server establishes JSESSIONID cookie and issues 302 Redirect to '/'." },
+                { location: "client",   type: "response", message: "6. Browser follows redirect to the SPA entry point (index.html)." }
+            ],
+
+            errorFlow: [
+                { location: "client",   type: "request",  message: "1. User submits invalid credentials." },
+                { location: "server",   type: "error",    message: "2. Spring Security throws BadCredentialsException." },
+                { location: "server",   type: "response", message: "3. Server redirects to /login?error=true." },
+                { location: "client",   type: "process",  message: "4. Browser reloads login.html. JS detects '?error' in window.location.search." },
+                { location: "client",   type: "response", message: "5. Error message dynamically injected into the UI." }
+            ]
+        });
+    </script>
 </head>
 <body>
 <div class='main-container'>

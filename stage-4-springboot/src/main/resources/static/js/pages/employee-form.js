@@ -33,6 +33,35 @@ load: function(params)
 // Mode Setups
 setupAdd: function()
 {
+    XRay.init({
+        title: "Stage 4: Complex Asynchronous Mutation",
+        module: "Add Employee (Multi-Layer Validation & REST POST)",
+
+        impact: [
+            "Concurrent API Fetching: Form dynamically populates the Designation dropdown via a secondary async GET call.",
+            "Dual-Layer Validation: Fast client-side JS validation prevents bad requests; strict server-side Service validation ensures data integrity.",
+            "RESTful POST: Data transmitted as application/json to a strictly mapped @PostMapping endpoint.",
+            "Semantic Error Mapping: Business exceptions (like duplicate PAN) mapped to HTTP 422 Unprocessable Entity.",
+            "DOM-Only Navigation: Success flows clear the form module and inject confirmation HTML without manipulating window history."
+        ],
+
+        successFlow: [
+            { location: "client",   type: "request",  message: "1. User submits form. JS employeeValidator checks fields (e.g., regex for basicSalary)." },
+            { location: "client",   type: "request",  message: "2. JS extracts form data, applies CSRF header, and issues POST /api/employees." },
+            { location: "server",   type: "process",  message: "3. EmployeeServiceImpl validates Designation existence and PAN/Aadhar uniqueness." },
+            { location: "database", type: "process",  message: "4. JpaRepository executes INSERT operation." },
+            { location: "server",   type: "response", message: "5. Controller returns HTTP 201 Created with saved EmployeeDTO." },
+            { location: "client",   type: "response", message: "6. JS wipes the form UI and renders an inline success notification." }
+        ],
+
+        errorFlow: [
+            { location: "client",   type: "request",  message: "1. User submits a valid form, but with a PAN already used by another employee." },
+            { location: "server",   type: "error",    message: "2. EmployeeServiceImpl throws BusinessException containing a field-specific error map." },
+            { location: "server",   type: "response", message: "3. GlobalExceptionHandler maps exception to HTTP 422 JSON response." },
+            { location: "client",   type: "process",  message: "4. EmployeeService detects 422 status and throws {type: 'BUSINESS', errors: ...}." },
+            { location: "client",   type: "response", message: "5. JS showError() iterates map and injects red text precisely under the PAN input field." }
+        ]
+    });
     document.getElementById('formTitle').innerText='Employee (Add Form)';
     const btn=document.getElementById('submitBtn');
     btn.textContent='Add';

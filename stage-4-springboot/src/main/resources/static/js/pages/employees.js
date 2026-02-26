@@ -6,6 +6,36 @@ employeeList:[],
 selectedRow:null,
 load: async function()
 {
+    XRay.init({
+        title: "Stage 4: SPA State Management",
+        module: "View Employees (Master-Detail API Hydration)",
+
+        impact: [
+            "Client-Side State Caching: Employee array is cached in JS memory (this.employeeList) upon initial fetch.",
+            "Zero-Latency Detail View: Clicking a row updates the detail panel instantly from local memory, bypassing the server entirely.",
+            "Role-Based Rendering: Action column dynamically injects Edit/Delete links or 'View Only' text based on sessionStorage.",
+            "Client-Side Formatting: Dates are transformed from ISO format (yyyy-mm-dd) to localized strings natively in the browser.",
+            "Decoupled Presentation: Backend serves pure JSON; frontend manages all DOM creation and interaction."
+        ],
+
+        successFlow: [
+            { location: "client",   type: "request",  message: "1. Router executes employees.load(). JS calls fetch('/api/employees')." },
+            { location: "server",   type: "process",  message: "2. EmployeeController delegates to EmployeeServiceImpl.getAll()." },
+            { location: "database", type: "process",  message: "3. JpaRepository executes SELECT query and fetches entities." },
+            { location: "server",   type: "response", message: "4. Entities mapped to DTOs. API returns HTTP 200 with JSON array." },
+            { location: "client",   type: "process",  message: "5. JS caches array locally and renders the master table." },
+            { location: "client",   type: "process",  message: "6. User clicks row. JS retrieves object from cache and hydrates Detail Panel." }
+        ],
+
+        errorFlow: [
+            { location: "client",   type: "request",  message: "1. JS requests employee list." },
+            { location: "server",   type: "error",    message: "2. Database connection fails. Spring throws SQLException." },
+            { location: "server",   type: "response", message: "3. GlobalExceptionHandler traps error and returns HTTP 500." },
+            { location: "client",   type: "process",  message: "4. JS catch block intercepts failure." },
+            { location: "client",   type: "response", message: "5. Table body is replaced with a localized error message." }
+        ]
+    });
+
     const tableBody=document.getElementById('employeeTableBody');
     const userRole=sessionStorage.getItem('userRole');
     try
