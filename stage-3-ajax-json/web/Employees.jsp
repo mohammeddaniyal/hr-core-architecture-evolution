@@ -2,6 +2,36 @@
 <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/employees.css'>
 <script src='${pageContext.request.contextPath}/js/Employees.js'></script>
 <script>
+XRay.init({
+    title: "Stage 3: REST-Driven Data Layer",
+    module: "View Employees (JSON API + Client Rendering)",
+
+    impact: [
+        "Dedicated JSON Endpoint: Employees fetched via GET /getEmployees.",
+        "Client-Side Rendering: Grid populated dynamically using DOM manipulation.",
+        "Decoupled Data & Presentation: Servlet returns pure JSON instead of JavaScript.",
+        "Data Formatting on Client: Date transformation handled in browser.",
+        "Hybrid MPA Architecture: JSP provides layout shell; data loaded asynchronously."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. Browser loads Employees.jsp layout." },
+        { location: "client", type: "request", message: "2. JavaScript sends GET request to /getEmployees." },
+        { location: "server", type: "process", message: "3. Servlet retrieves employee list via DAO." },
+        { location: "database", type: "process", message: "4. JOIN query executed to fetch employees with designation." },
+        { location: "server", type: "response", message: "5. JSON response returned with employee array." },
+        { location: "client", type: "process", message: "6. Grid populated dynamically without full page reload." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. JavaScript requests employee data." },
+        { location: "database", type: "error", message: "2. DAO throws exception due to database failure." },
+        { location: "server", type: "response", message: "3. JSON response returned with success=false." },
+        { location: "client", type: "response", message: "4. Browser displays alert or logs error." }
+    ]
+});
+</script>
+<script>
 function getModule()
 {
 return 'EMPLOYEE';
@@ -31,9 +61,9 @@ employee.name=_employees[k].name;
 employee.designationCode=_employees[k].designationCode;
 employee.designation=_employees[k].designation;
 date=new Date(_employees[k].dateOfBirth);
-year=date.getUTCFullYear();
-month=String(date.getUTCMonth()+1).padStart(2,'0');
-day=String(date.getUTCDate()+1).padStart(2,'0');
+year=date.getFullYear();
+month=String(date.getMonth()+1).padStart(2,'0');
+day=String(date.getDate()).padStart(2,'0');
 employee.dateOfBirth=day+"/"+month+"/"+year;
 employee.gender=_employees[k].gender;
 if(_employees[k].isIndian==true) employee.isIndian=true;
@@ -50,11 +80,12 @@ populateEmployeesGridTable();
 }
 else
 {
-alert('some problem');
+console.error("Failed to fetch employees. HTTP Status: " + this.status);
+alert("Unable to load employee data from the server. Please try again later.");
 }
 }
 };
-xmlHttpRequest.open('GET','getEmployees',true);
+xmlHttpRequest.open('GET','${pageContext.request.contextPath}/getEmployees',true);
 xmlHttpRequest.send();
 }
 window.addEventListener('load',populateEmployees);

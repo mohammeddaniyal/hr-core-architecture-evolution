@@ -2,8 +2,11 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Core | Stage 3 (MVC Architecture)</title>
+<title>HR Core | Stage 3 (AJAX & JSON)</title>
 <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/styles.css'>
+<link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/xray.css'>
+<script src='${pageContext.request.contextPath}/js/xray.js'></script>
+
 <script>
 function guard()
 {

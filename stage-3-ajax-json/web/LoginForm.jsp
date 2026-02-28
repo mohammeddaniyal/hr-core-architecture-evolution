@@ -2,8 +2,41 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>HR Core | Stage 3 (MVC Architecture)</title>
+<title>HR Core | Stage 3 (AJAX & JSON)</title>
 <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/styles.css'>
+<link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/css/xray.css'>
+<script src='${pageContext.request.contextPath}/js/xray.js'></script>
+
+<script>
+XRay.init({
+    title: "Stage 3: AJAX + JSON API Architecture",
+    module: "Login (Asynchronous Authentication via REST Endpoint)",
+
+    impact: [
+        "Asynchronous Communication: Login handled via XMLHttpRequest instead of form submission.",
+        "JSON Payload Exchange: Credentials transmitted as application/json.",
+        "REST-Oriented Endpoint: Servlet acts as JSON API returning structured response object.",
+        "Client-Controlled Navigation: Browser redirect triggered conditionally via JavaScript.",
+        "Session Persistence: HttpSession still used for server-side authentication state."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. User clicks Login button. JavaScript constructs JSON object." },
+        { location: "client", type: "request", message: "2. XMLHttpRequest sends POST /login with application/json body." },
+        { location: "server", type: "process", message: "3. Servlet parses JSON using Gson into AdministratorDTO." },
+        { location: "database", type: "process", message: "4. DAO validates username and password." },
+        { location: "server", type: "process", message: "5. HttpSession created and JSON success response generated." },
+        { location: "client", type: "response", message: "6. JavaScript parses JSON and redirects to index.jsp without full form resubmission." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. User submits invalid credentials." },
+        { location: "server", type: "process", message: "2. DAO lookup fails or password mismatch detected." },
+        { location: "server", type: "response", message: "3. JSON response returned with success=false and error message." },
+        { location: "client", type: "response", message: "4. JavaScript updates error section dynamically without page reload." }
+    ]
+});
+</script>
 <script>
 function authentication()
 {

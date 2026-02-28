@@ -31,13 +31,16 @@ return;
 var employee=response.result;
 employeeEditForm.name.value=employee.name;
 employeeEditForm.designationCode.value=employee.designationCode;
-var date=new Date(employee.dateOfBirth);
 
-var year=date.getUTCFullYear();
-var month=String(date.getUTCMonth()+1).padStart(2,'0');
-var day=String(date.getUTCDate()).padStart(2,'0');
-var dateOfBirth=year+"-"+month+"-"+day;
-employeeEditForm.dateOfBirth.value=dateOfBirth;
+const date = new Date(employee.dateOfBirth);
+
+const day = String(date.getDate()).padStart(2, '0');
+const month = String(date.getMonth() + 1).padStart(2, '0');
+const year = date.getFullYear();
+
+const formattedDob = year+'-'+month+'-'+day;
+
+employeeEditForm.dateOfBirth.value=formattedDob;
 
 if(employee.gender=='M')
 {

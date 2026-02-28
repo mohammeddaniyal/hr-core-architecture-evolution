@@ -2,6 +2,36 @@
 <script src='${pageContext.request.contextPath}/js/EmployeeAddForm.js'></script>
 <link rel='stylesheet' type='text/css' url='${pageContext.request.contextPath}/css/employees.css' />
 <script>
+XRay.init({
+    title: "Stage 3: REST-Based Mutation Flow",
+    module: "Add Employee (AJAX + JSON Validation API)",
+
+    impact: [
+        "Asynchronous Submission: Form submitted via AJAX instead of traditional POST.",
+        "Structured JSON Contract: Employee data serialized and transmitted as JSON.",
+        "Field-Level Validation Feedback: API returns property-specific error map.",
+        "Client-Side UI Update: Success notification rendered without page reload.",
+        "Hybrid Architecture: JSP provides layout shell; mutation handled by REST endpoint."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. User fills form and clicks Add." },
+        { location: "client", type: "request", message: "2. JavaScript serializes form data into JSON." },
+        { location: "server", type: "process", message: "3. Servlet validates designation, PAN, and Aadhaar." },
+        { location: "database", type: "process", message: "4. DAO executes INSERT operation." },
+        { location: "server", type: "response", message: "5. JSON response returned with success=true." },
+        { location: "client", type: "process", message: "6. UI updates dynamically without full page reload." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. User submits invalid or duplicate data." },
+        { location: "server", type: "process", message: "2. Validation detects property-level errors." },
+        { location: "server", type: "response", message: "3. JSON response returned with error map." },
+        { location: "client", type: "process", message: "4. Field-level messages displayed dynamically." }
+    ]
+});
+</script>
+<script>
 function getModule()
 {
 return 'EMPLOYEE';

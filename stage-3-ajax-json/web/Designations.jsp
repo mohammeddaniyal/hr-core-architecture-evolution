@@ -87,4 +87,34 @@ window.addEventListener('load',populateDesignations);
 </tr>
 </tbody>
 </table>
+<script>
+XRay.init({
+    title: "Stage 3: AJAX + JSON (Client-Side Rendering)",
+    module: "View Designations (API-Driven Data Rendering)",
+
+    impact: [
+        "API-Based Data Retrieval: Designations fetched asynchronously via JSON endpoint.",
+        "Client-Side Rendering: Table rows generated dynamically using DOM cloning.",
+        "Decoupled Presentation: JSP provides layout shell only; data rendering handled by JavaScript.",
+        "REST-Oriented Endpoint: Dedicated servlet returns structured JSON response.",
+        "Reduced Server HTML Generation: No JSP iteration or custom tag required."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. Browser loads Designations.jsp layout shell." },
+        { location: "client", type: "request", message: "2. JavaScript sends GET request to /getDesignations endpoint." },
+        { location: "server", type: "process", message: "3. Servlet invokes DAO to fetch designation list." },
+        { location: "database", type: "process", message: "4. DAO executes SELECT query and returns DTO list." },
+        { location: "server", type: "response", message: "5. JSON response returned with success flag and result array." },
+        { location: "client", type: "process", message: "6. JavaScript parses JSON and dynamically generates table rows." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. JavaScript sends GET request to API." },
+        { location: "database", type: "error", message: "2. DAO throws exception due to database failure." },
+        { location: "server", type: "response", message: "3. JSON response returned with success=false and error message." },
+        { location: "client", type: "response", message: "4. JavaScript detects failure and alerts user." }
+    ]
+});
+</script>
 <jsp:include page='/MasterPageBottomSection.jsp' />

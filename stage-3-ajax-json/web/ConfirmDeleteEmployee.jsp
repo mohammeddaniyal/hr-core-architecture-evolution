@@ -1,5 +1,5 @@
 <jsp:include page='MasterPageTopSection.jsp' />
-<script src='w/js/ConfirmDeleteEmployee.js'></script>
+<script src='${pageContext.request.contextPath}/js/ConfirmDeleteEmployee.js'></script>
 <link rel='stylesheet' type='text/css' url='${pageContext.request.contextPath}/css/employees.css' />
 <script>
 function getModule()

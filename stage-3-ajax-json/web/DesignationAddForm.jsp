@@ -100,4 +100,36 @@ Designation
 </form>
 <form id='cancelAdditionForm' action='${pageContext.request.contextPath}/Designations.jsp'></form>
 </span>
+
+<script>
+XRay.init({
+    title: "Stage 3: AJAX + JSON (Client-Side Mutation)",
+    module: "Add Designation (Asynchronous JSON Submission)",
+
+    impact: [
+        "Asynchronous Mutation: Form submission replaced with JSON-based POST request.",
+        "Client-Side State Management: Notification UI rendered dynamically without page reload.",
+        "REST-Oriented Endpoint: Dedicated servlet processes JSON payload.",
+        "Decoupled Presentation: No JSP forwarding; UI updated via DOM manipulation.",
+        "API Response Abstraction: Structured JSON response with success and error fields."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. User clicks Add button." },
+        { location: "client", type: "request", message: "2. JavaScript sends POST request with JSON payload." },
+        { location: "server", type: "process", message: "3. Servlet parses JSON using Gson into DTO." },
+        { location: "database", type: "process", message: "4. DAO validates uniqueness and executes INSERT." },
+        { location: "server", type: "response", message: "5. JSON success response returned." },
+        { location: "client", type: "process", message: "6. Notification UI generated dynamically without full page reload." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. User submits duplicate designation." },
+        { location: "database", type: "error", message: "2. DAO throws DAOException for existing title." },
+        { location: "server", type: "response", message: "3. JSON response returned with success=false and error message." },
+        { location: "client", type: "response", message: "4. Error message displayed inline without page refresh." }
+    ]
+});
+</script>
+
 <jsp:include page='/MasterPageBottomSection.jsp' />
