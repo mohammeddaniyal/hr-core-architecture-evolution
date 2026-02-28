@@ -33,7 +33,7 @@ if(messageBean.getGenerateButtons())
 <table>
 <tr>
 <td>
-<form action='/stage2/${messageBean.buttonOneAction}'>
+<form action='${pageContext.request.contextPath}/${messageBean.buttonOneAction}'>
 <button>${messageBean.buttonOneText}</button>
 </form>
 </td>

@@ -6,9 +6,9 @@
 </tm:If>
 <tm:Module name='EMPLOYEE' />
 <jsp:include page='/MasterPageTopSection.jsp' />
-<script src='/stage2/js/EmployeeAddForm.js'></script>
+<script src='${pageContext.request.contextPath}/js/EmployeeAddForm.js'></script>
 <h2>Employee (Add Module)</h2>
-<form method='post' action='/stage2/AddEmployee.jsp' onsubmit='return validateForm(this)'>
+<form method='post' action='${pageContext.request.contextPath}/AddEmployee.jsp' onsubmit='return validateForm(this)'>
 <tm:FormID />
 <table>
 <tr>
@@ -93,5 +93,37 @@
 </tr>
 </table>
 </form>
-<form id='cancelAdditionForm' action='/stage2/Employees.jsp'></form>
+<form id='cancelAdditionForm' action='${pageContext.request.contextPath}/Employees.jsp'></form>
+<script>
+XRay.init({
+    title: "Stage 2: JSP + MVC + Guarded Flow",
+    module: "Add Employee (Layered Validation + Controlled Routing)",
+
+    impact: [
+        "MVC Separation: JSP handles view, servlet handles control flow.",
+        "Authentication Guard: Custom tag prevents unauthorized form access.",
+        "Bean Binding: Request parameters automatically mapped to EmployeeBean.",
+        "Structured Validation: Errors passed as request attributes instead of rebuilding HTML.",
+        "Centralized Notification: Success responses rendered via reusable Notification.jsp.",
+        "Still Forward-Based Flow: No redirect-based PRG yet."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. User submits employee form." },
+        { location: "server", type: "process", message: "2. AddEmployee.jsp binds parameters to EmployeeBean." },
+        { location: "server", type: "process", message: "3. Request forwarded to AddEmployee servlet." },
+        { location: "server", type: "process", message: "4. Servlet performs business validations (designation, PAN, Aadhaar)." },
+        { location: "database", type: "process", message: "5. DAO executes INSERT after validation passes." },
+        { location: "server", type: "response", message: "6. Servlet forwards to Notification.jsp with MessageBean." },
+        { location: "client", type: "response", message: "7. Browser renders confirmation page." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. User submits invalid or duplicate data." },
+        { location: "server", type: "process", message: "2. Validation detects duplicate PAN, Aadhaar, or invalid designation." },
+        { location: "server", type: "response", message: "3. Servlet forwards back to EmployeeAddForm.jsp with error attributes." },
+        { location: "client", type: "response", message: "4. Form reloads with field-level error messages preserved." }
+    ]
+});
+</script>
 <jsp:include page='/MasterPageBottomSection.jsp' />

@@ -2,9 +2,9 @@
 <jsp:useBean id='employeeBean' scope='request' class='io.github.mohammeddaniyal.hr.beans.EmployeeBean' />
 <tm:Module name='EMPLOYEE' />
 <jsp:include page='/MasterPageTopSection.jsp' />
-<script src='/stage2/js/EmployeeEditForm.js'></script>
+<script src='${pageContext.request.contextPath}/js/EmployeeEditForm.js'></script>
 <h2>Employee (Edit Module)</h2>
-<form method='post' action='/stage2/updateEmployee' onsubmit='return validateForm(this)'>
+<form method='post' action='${pageContext.request.contextPath}/updateEmployee' onsubmit='return validateForm(this)'>
     <input type='hidden' id='employeeId' name='employeeId' value='${employeeBean.employeeId}'>
 <tm:FormID />
 <table>
@@ -18,9 +18,11 @@
 <td><select id='designationCode' name='designationCode'>
 <option value='-1'>&lt;Select Designation&gt;</option>
 <tm:EntityList populatorClass='io.github.mohammeddaniyal.hr.bl.DesignationBL' populatorMethod='getAll' name='designationBean'>
-<option value='${designationBean.code}'>${designationBean.title}</option>
 <tm:If condition='${designationBean.code==employeeBean.designationCode}'>
 <option selected value='${designationBean.code}'>${designationBean.title}</option>
+</tm:If>
+<tm:If condition='${designationBean.code!=employeeBean.designationCode}'>
+<option value='${designationBean.code}'>${designationBean.title}</option>
 </tm:If>
 </tm:EntityList>
 </select><span id='designationCodeErrorSection' style='color:red'></span></td>
@@ -87,5 +89,5 @@
 </tr>
 </table>
 </form>
-<form id='cancelUpdationForm' action='/stage2/Employees.jsp'></form>
+<form id='cancelUpdationForm' action='${pageContext.request.contextPath}/Employees.jsp'></form>
 <jsp:include page='/MasterPageBottomSection.jsp' />
