@@ -38,7 +38,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -49,9 +49,9 @@ pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
 pw.println("<b>Designations</b>");
 pw.println("<br>");
-pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<a href='employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 
@@ -60,7 +60,7 @@ pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bo
 pw.println("<h3>Notification!</h3>");
 pw.println("<b>Designation Deleted</b>");
 pw.println("<br><br>");
-pw.println("<form action='/stage1/designationsView'>");
+pw.println("<form action='designationsView'>");
 pw.println("<button type='submit'>Ok</button>");
 pw.println("</form>");
 pw.println("</div>");
@@ -91,7 +91,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -102,9 +102,9 @@ pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
 pw.println("<b>Designations</b>");
 pw.println("<br>");
-pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<a href='employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 
@@ -113,7 +113,7 @@ pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bo
 pw.println("<h3>Notification!</h3>");
 pw.println("<b>Unable to delete designation</b><br>");
 pw.println("<b>"+daoException.getMessage()+"</b><br><br>");
-pw.println("<form action='/stage1/designationsView'>");
+pw.println("<form action='designationsView'>");
 pw.println("<button type='submit'>Ok</button>");
 pw.println("</form>");
 pw.println("</div>");
@@ -167,7 +167,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -178,9 +178,9 @@ pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
 pw.println("<b>Designations</b>");
 pw.println("<br>");
-pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<a href='employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
@@ -193,7 +193,7 @@ pw.println("<table border='1'>");
 pw.println("<thead>");
 pw.println("<tr>");
 pw.println("<th colspan='4' style='text-align:right;padding:5px'>");
-pw.println("<a href='/stage1/AddDesignation.html'>Add new Designation</a>");
+pw.println("<a href='AddDesignation.html'>Add new Designation</a>");
 pw.println("</th>");
 pw.println("</tr>");
 pw.println("<tr>");
@@ -219,8 +219,8 @@ title=designationDTO.getTitle();
 pw.println("<tr>");
 pw.println("<td style='text-align:right'>"+sno+".</td>");
 pw.println("<td>"+title+"</td>");
-pw.println("<td style='text-align:center'><a href='/stage1/editDesignation?code="+code+"'>Edit</a></td>");
-pw.println("<td style='text-align:center'><a href='/stage1/confirmDeleteDesignation?code="+code+"'>Delete</a></td>");
+pw.println("<td style='text-align:center'><a href='editDesignation?code="+code+"'>Edit</a></td>");
+pw.println("<td style='text-align:center'><a href='confirmDeleteDesignation?code="+code+"'>Delete</a></td>");
 pw.println("</tr>");
 }
 

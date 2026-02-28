@@ -174,7 +174,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -183,18 +183,18 @@ pw.println("<div style='width:90hw;height:70vh;margin:5px;border:1px solid white
 
 pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
-pw.println("<a href='/stage1/designationsView'>Designations</a>");
+pw.println("<a href='designationsView'>Designations</a>");
 pw.println("<br>");
 pw.println("<b>Employees</b>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 pw.println("");
 pw.println("<!-- right panel starts here -->");
 pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
 pw.println("<h2>Employee (Add Module)</h2>");
-pw.println("<form method='post' action='/stage1/addEmployee' onsubmit='return validateForm(this)'>");
+pw.println("<form method='post' action='addEmployee' onsubmit='return validateForm(this)'>");
 pw.println("<table>");
 pw.println("<tr>");
 pw.println("<td>Name</td>");
@@ -295,7 +295,7 @@ pw.println("<span id='panNumberErrorSection' style='color:red'></span></td>");
 pw.println("</tr>");
 pw.println("");
 pw.println("<td>Aadhar Card Number</td>");
-pw.println("<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='10' size='11' value='"+aadharCardNumber+"'>");
+pw.println("<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='12' size='13' value='"+aadharCardNumber+"'>");
 if(aadharCardNumberExists)
 {
 pw.println("<span id='aadharCardNumberErrorSection' style='color:red'>Aadhar card number exists.</span></td>");
@@ -325,7 +325,7 @@ pw.println("</div>");
 pw.println("");
 pw.println("</div>");
 pw.println("<!-- Main container ends here-->");
-pw.println("<form id='cancelAdditionForm' action='/stage1/employeesView'></form>");
+pw.println("<form id='cancelAdditionForm' action='employeesView'></form>");
 pw.println("</body>");
 pw.println("</html>");
 return;
@@ -360,7 +360,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -369,11 +369,11 @@ pw.println("<div style='width:90hw;height:70vh;margin:5px;border:1px solid white
 
 pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
-pw.println("<a href='/stage1/designationsView'>Designations</a>");
+pw.println("<a href='designationsView'>Designations</a>");
 pw.println("<br>");
-pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<a href='employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 
@@ -386,12 +386,12 @@ pw.println("Do you want to add more?");
 pw.println("<table>");
 pw.println("<tr>");
 pw.println("<td>");
-pw.println("<form action='/stage1/getEmployeeAddForm'>");
+pw.println("<form action='getEmployeeAddForm'>");
 pw.println("<button type='submit'>Yes</button>");
 pw.println("</form>");
 pw.println("</td>");
 pw.println("<td>");
-pw.println("<form action='/stage1/employeesView'>");
+pw.println("<form action='employeesView'>");
 pw.println("<button type='submit'>No</button>");
 pw.println("</form>");
 pw.println("</td>");
@@ -416,11 +416,13 @@ pw.println("</html>");
 
 }catch(DAOException daoException)
 {
+  daoException.printStackTrace();
 System.out.println(daoException.getMessage());
 //send back page with error message
 }
 catch(Exception exception)
 {
+  exception.printStackTrace();
 System.out.println(exception.getMessage());
 }
 }

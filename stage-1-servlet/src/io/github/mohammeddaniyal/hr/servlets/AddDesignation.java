@@ -37,7 +37,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbsp;HR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -48,9 +48,9 @@ pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
 pw.println("<b>Designations</b>");
 pw.println("<br>");
-pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<a href='employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 
@@ -63,12 +63,12 @@ pw.println("Do you want to add more?");
 pw.println("<table>");
 pw.println("<tr>");
 pw.println("<td>");
-pw.println("<form action='/stage1/AddDesignation.html'>");
+pw.println("<form action='AddDesignation.html'>");
 pw.println("<button type='submit'>Yes</button>");
 pw.println("</form>");
 pw.println("</td>");
 pw.println("<td>");
-pw.println("<form action='/stage1/designationsView'>");
+pw.println("<form action='designationsView'>");
 pw.println("<button type='submit'>No</button>");
 pw.println("</form>");
 pw.println("</td>");
@@ -120,7 +120,7 @@ pw.println("<!-- Main container starts here-->");
 pw.println("<div style='width:90hw;height:auto;border:1px solid black'>");
 pw.println("<!-- header starts here -->");
 pw.println("<div style='margin:5px;width:90hw;height:auto;border:1px solid black'>");
-pw.println("<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
+pw.println("<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>");
 pw.println("</div>");
 
 pw.println("<!-- header ends here -->");
@@ -131,9 +131,9 @@ pw.println("<!-- left panel starts here -->");
 pw.println("<div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
 pw.println("<b>Designations</b>");
 pw.println("<br>");
-pw.println("<a href='/stage1/employeesView'>Employees</a>");
+pw.println("<a href='employeesView'>Employees</a>");
 pw.println("<br><br>");
-pw.println("<a href='/stage1/index.html'>Home</a>");
+pw.println("<a href='index.html'>Home</a>");
 pw.println("</div>");
 pw.println("<!-- left panel ends here -->");
 
@@ -142,7 +142,7 @@ pw.println("<div style='height:65vh;margin-left:105px;margin-right:5px;margin-bo
 pw.println("<h2>Designation (Add Module)</h2>");
 pw.println("<div style='color:red'>"+daoException.getMessage()+"</div>");
 
-pw.println("<form action='/stage1/addDesignation' onsubmit='return validateForm(this)'>");
+pw.println("<form action='addDesignation' onsubmit='return validateForm(this)'>");
 pw.println("Designation");
 pw.println("<input type='text' id='title' name='title' maxlength='35' size='36' value='"+title+"'>");
 pw.println("<span id='titleErrorSection' style='color:red'></span>");
@@ -162,15 +162,21 @@ pw.println("</div>");
 
 pw.println("</div>");
 pw.println("<!-- Main container ends here-->");
-pw.println("<form id='cancelAdditionForm' action='/stage1/designationsView'></form>");
+pw.println("<form id='cancelAdditionForm' action='designationsView'></form>");
 pw.println("</body>");
 pw.println("</html>");
 
 
 }catch(Exception exception)
 {
-System.out.println(exception.getMessage());
-}
+  exception.printStackTrace();
+
+    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    response.setContentType("text/html");
+
+
+    pw.println("<h2>System Error</h2>");
+    pw.println("<p>An unexpected error occurred. Please try again later.</p>");}
 }
 public void doPost(HttpServletRequest request,HttpServletResponse response)
 {
