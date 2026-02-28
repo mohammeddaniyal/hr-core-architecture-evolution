@@ -3,6 +3,43 @@
 <head>
 <meta charset='utf-8'>
 <title>HR Core | Stage 1 (Servlets)</title>
+<link rel="stylesheet" href="css/xray.css">
+<script src="js/xray.js"></script>
+
+<script>
+XRay.init({
+    title: "Stage 1: Raw Servlets",
+    module: "Add Designation (Synchronous Form Submission)",
+
+    impact: [
+        "Synchronous Request Model: Browser blocks while waiting for server response.",
+        "Mutation via GET: Data insertion is triggered through query parameters (not REST-compliant).",
+        "No PRG Pattern: Refreshing the page can resubmit the same request.",
+        "Tight Coupling: Servlet mixes validation handling, control flow, and HTML rendering.",
+        "Full Page Regeneration: Entire HTML document is rebuilt after every submission.",
+        "Clear DAO Isolation: Database logic properly encapsulated in DesignationDAO."
+    ],
+
+    successFlow: [
+        { location: "client",   type: "request",  message: "1. User fills form. Client-side JS validates required field." },
+        { location: "client",   type: "request",  message: "2. Browser sends synchronous GET request with title parameter." },
+        { location: "server",   type: "request",  message: "3. Tomcat routes request to AddDesignation servlet." },
+        { location: "server",   type: "process",  message: "4. Servlet extracts raw parameter via request.getParameter() and builds DTO." },
+        { location: "database", type: "process",  message: "5. DAO checks duplicate title and executes INSERT using PreparedStatement." },
+        { location: "server",   type: "response", message: "6. Servlet generates success HTML response using pw.println()." },
+        { location: "client",   type: "response", message: "7. Browser performs full page reload and displays confirmation screen." }
+    ],
+
+    errorFlow: [
+        { location: "client",   type: "request",  message: "1. User submits form with valid client-side validation." },
+        { location: "server",   type: "process",  message: "2. Servlet calls DesignationDAO.add()." },
+        { location: "database", type: "error",    message: "3. DAO detects duplicate title or database constraint violation." },
+        { location: "server",   type: "error",    message: "4. DAOException propagates back to servlet." },
+        { location: "server",   type: "response", message: "5. Servlet regenerates full HTML form and injects error message dynamically." },
+        { location: "client",   type: "response", message: "6. Browser reloads entire page and displays error above the form field." }
+    ]
+});
+</script>
 <script>
 function validateForm(frm)
 {
@@ -31,7 +68,7 @@ document.getElementById('cancelAdditionForm').submit();
 <div style='width:90hw;height:auto;border:1px solid black'>
 <!-- header starts here -->
 <div style='margin:5px;width:90hw;height:auto;border:1px solid black'>
-<a href='/stage1'index.html'><img src='/stage1/images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>
+<a href='index.html'><img src='images/logo.png' style='float:left'></a><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>
 </div>
 
 <!-- header ends here -->
@@ -42,16 +79,16 @@ document.getElementById('cancelAdditionForm').submit();
 <div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
 <b>Designations</b>
 <br>
-<a href='/stage1/employeesView'>Employees</a>
+<a href='employeesView'>Employees</a>
 <br><br>
-<a href='/stage1/index.html'>Home</a>
+<a href='index.html'>Home</a>
 </div>
 <!-- left panel ends here -->
 
 <!-- right panel starts here -->
 <div style='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
 <h2>Designation (Add Module)</h2>
-<form action='/stage1/addDesignation' onsubmit='return validateForm(this)'>
+<form action='addDesignation' onsubmit='return validateForm(this)'>
 Designation
 <input type='text' id='title' name='title' maxlength='35' size='36'>
 <span id='titleErrorSection' style='color:red'></span>
@@ -71,6 +108,6 @@ Designation
 
 </div>
 <!-- Main container ends here-->
-<form id='cancelAdditionForm' action='/stage1/designationsView'></form>
+<form id='cancelAdditionForm' action='designationsView'></form>
 </body>
 </html>

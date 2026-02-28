@@ -3,14 +3,48 @@
 <head>
 <meta charset='utf-8'>
 <title>HR Core | Stage 1 (Servlets)</title>
+<link rel="stylesheet" href="css/xray.css">
+<script src="js/xray.js"></script>
+<script>
+XRay.init({
+    title: "Stage 1: Raw Servlets",
+    module: "Application Entry (Static Navigation Hub)",
+
+    impact: [
+        "Static HTML Entry: No server-side rendering at this level.",
+        "Anchor-Based Navigation: Each link triggers a new HTTP request.",
+        "Synchronous Page Model: Entire document reloads when switching modules.",
+        "No Layout Reuse Mechanism: Every servlet independently rebuilds full page structure.",
+        "Simple URL Mapping: Navigation relies on explicit web.xml servlet mappings."
+    ],
+
+    successFlow: [
+        { location: "client", type: "request", message: "1. User clicks a navigation link (e.g., Designations)." },
+        { location: "client", type: "request", message: "2. Browser sends synchronous GET request to mapped servlet URL." },
+        { location: "server", type: "request", message: "3. Tomcat resolves servlet mapping defined in web.xml." },
+        { location: "server", type: "process", message: "4. Target servlet executes business logic and interacts with DAO layer." },
+        { location: "server", type: "response", message: "5. Servlet generates complete HTML response." },
+        { location: "client", type: "response", message: "6. Browser replaces entire DOM (full page reload)." }
+    ],
+
+    errorFlow: [
+        { location: "client", type: "request", message: "1. User clicks navigation link." },
+        { location: "server", type: "request", message: "2. Tomcat attempts to resolve servlet mapping." },
+        { location: "server", type: "error", message: "3. Mapping failure or servlet-level exception occurs." },
+        { location: "server", type: "response", message: "4. Container generates HTTP 404 or 500 response." },
+        { location: "client", type: "response", message: "5. Browser displays server error page after full reload." }
+    ]
+});
+</script>
 </head>
+
 <body>
 <!-- Main container starts here-->
 
 <div style='width:90hw;height:auto;border:1px solid black'>
 <!-- header starts here -->
 <div style='margin:5px;width:90hw;height:auto;border:1px solid black'>
-<img src='/stage1/images/logo.png' style='float:left'><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>
+<img src='images/logo.png' style='float:left'><div style='margin-top:6px;margin-bottom:6px;padding:5px;font-size:20pt'>&nbspHR Core</div>
 </div>
 
 <!-- header ends here -->
@@ -19,9 +53,9 @@
 
 <!-- left panel starts here -->
 <div style='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
-<a href='/stage1/designationsView'>Designations</a>
+<a href='designationsView'>Designations</a>
 <br>
-<a href='/stage1/employeesView'>Employees</a>
+<a href='employeesView'>Employees</a>
 </div>
 <!-- left panel ends here -->
 
