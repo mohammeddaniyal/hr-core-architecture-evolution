@@ -32,9 +32,9 @@ designation.setCode(code);
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 public void update(DesignationDTO designation) throws DAOException
@@ -76,9 +76,9 @@ preparedStatement.executeUpdate();
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -118,9 +118,9 @@ preparedStatement.executeUpdate();
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -149,9 +149,9 @@ resultSet.close();
 statement.close();
 connection.close();
 return designations;
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 public boolean designationCodeExists(int code) throws DAOException
@@ -168,9 +168,9 @@ resultSet.close();
 preparedStatement.close();
 connection.close();
 return exists;
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 public DesignationDTO getByCode(int code) throws DAOException
@@ -197,9 +197,9 @@ resultSet.close();
 preparedStatement.close();
 connection.close();
 return designation;
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 }

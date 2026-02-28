@@ -55,9 +55,9 @@ employees.add(employeeDTO);
 resultSet.close();
 statement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 return employees;
 }
@@ -110,9 +110,9 @@ employeeDTO.setEmployeeId("A"+resultSet.getInt(1));
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -186,9 +186,9 @@ preparedStatement.executeUpdate();
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -214,9 +214,9 @@ resultSet.close();
 preparedStatement.close();
 connection.close();
 return exists;
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -237,9 +237,9 @@ resultSet.close();
 preparedStatement.close();
 connection.close();
 return exists;
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -259,9 +259,9 @@ resultSet.close();
 preparedStatement.close();
 connection.close();
 return exists;
-}catch(SQLException sqlException)
+}catch(SQLException exception)
 {
-throw new DAOException(sqlException.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -295,9 +295,9 @@ preparedStatement.setInt(1,actualEmployeeId);
 preparedStatement.executeUpdate();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 }
 
@@ -362,9 +362,9 @@ employeeDTO.setAadharCardNumber(aadharCardNumber);
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 return employeeDTO;
 }
@@ -421,9 +421,9 @@ employeeDTO.setAadharCardNumber(aadharCardNumber);
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 return employeeDTO;
 }
@@ -480,9 +480,9 @@ employeeDTO.setAadharCardNumber(aadharCardNumber);
 resultSet.close();
 preparedStatement.close();
 connection.close();
-}catch(Exception exception)
+}catch(SQLException exception)
 {
-throw new DAOException(exception.getMessage());
+   throw new DAOException("Database operation failed.", exception);
 }
 return employeeDTO;
 }
