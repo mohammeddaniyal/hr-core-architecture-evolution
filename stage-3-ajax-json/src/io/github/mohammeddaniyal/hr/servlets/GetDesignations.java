@@ -28,14 +28,21 @@ response.setCharacterEncoding("utf-8");
 Gson gson=new Gson();
 DesignationDAO designationDAO=new DesignationDAO();
 List<DesignationDTO> designations=null;
-
+Response responseObject=new Response();
 try
 {
 designations=designationDAO.getAll();
 }catch(DAOException daoException)
 {
+responseObject.setSuccess(false);
+responseObject.setResult(null);
+responseObject.setError(daoException.getMessage());
+String responseJSONString=gson.toJson(responseObject);
+pw.print(responseJSONString);
+pw.flush();
+return;
+
 }
-Response responseObject=new Response();
 responseObject.setSuccess(true);
 responseObject.setResult(designations);
 responseObject.setError(null);

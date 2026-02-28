@@ -101,6 +101,13 @@ try
 employeeDAO.add(employee);
 }catch(DAOException daoException)
 {
+responseObject.setSuccess(false);
+responseObject.setResult(null);
+responseObject.setError(daoException.getMessage());
+String responseJSONString=gson.toJson(responseObject);
+pw.print(responseJSONString);
+pw.flush();
+return;
 }
 responseObject.setSuccess(true);
 responseObject.setResult(null);

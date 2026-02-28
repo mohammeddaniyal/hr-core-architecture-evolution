@@ -29,15 +29,21 @@ response.setContentType("text/plain");
 response.setCharacterEncoding("utf-8");
 EmployeeDAO employeeDAO=new EmployeeDAO();
 List<EmployeeDTO> employees=null;
+Gson gson=new Gson();
+Response responseObject=new Response();
 try
 {
 employees=employeeDAO.getAll();
 }catch(DAOException daoException)
 {
-
+responseObject.setSuccess(false);
+responseObject.setResult(null);
+responseObject.setError(daoException.getMessage());
+String responseJSONString=gson.toJson(responseObject);
+pw.print(responseJSONString);
+pw.flush();
+return;
 }
-Gson gson=new Gson();
-Response responseObject=new Response();
 responseObject.setSuccess(true);
 responseObject.setResult(employees);
 responseObject.setError(null);

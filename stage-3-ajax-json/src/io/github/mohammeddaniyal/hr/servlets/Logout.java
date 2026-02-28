@@ -26,6 +26,7 @@ session.invalidate();
 */
 }catch(Exception exception)
 {
+exception.printStackTrace();
 try
 {
 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
