@@ -50,7 +50,7 @@ HttpSession session=request.getSession();
 session.setAttribute("username",username);
 //requestDispatcher=request.getRequestDispatcher("/index.jsp");
 // reason not to use, this happens inside the server, browser is unaware so URL doesn't change
-// in our case /stage2/LoginForm.jsp remains as it but it should become /stage2/index.jsp
+// in our case /stage 2/LoginForm.jsp remains as it but it should become /stage 2/index.jsp
 //requestDispatcher.forward(request,response); 
 // solution 
 response.sendRedirect("index.jsp");
@@ -58,6 +58,7 @@ response.sendRedirect("index.jsp");
 }catch(Exception exception)
 {
 System.out.println(exception.getMessage());
+response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 requestDispatcher=request.getRequestDispatcher("/ErrorPage.jsp");
 try
 {

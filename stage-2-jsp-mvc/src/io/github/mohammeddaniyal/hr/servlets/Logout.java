@@ -19,6 +19,7 @@ session.invalidate();
 response.sendRedirect("LoginForm.jsp");
 }catch(Exception exception)
 {
+    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 requestDispatcher=request.getRequestDispatcher("/ErrorPage.jsp");
 try
 {

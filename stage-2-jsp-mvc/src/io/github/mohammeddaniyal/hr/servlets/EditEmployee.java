@@ -44,6 +44,7 @@ return;
 }catch(Exception exception)
 {
 System.out.println(exception.getMessage());
+response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 requestDispatcher=request.getRequestDispatcher("/ErrorPage.jsp");
 try
 {

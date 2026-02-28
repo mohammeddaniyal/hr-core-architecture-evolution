@@ -48,6 +48,7 @@ requestDispatcher.forward(request,response);
 {
 System.out.println(e.getMessage());
 RequestDispatcher requestDispatcher;
+response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 requestDispatcher=request.getRequestDispatcher("/ErrorPage.jsp");
 try
 {
