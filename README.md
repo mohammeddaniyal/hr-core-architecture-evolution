@@ -1,8 +1,20 @@
 # HR Core: The Evolution of Web Architecture
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Architecture_Portal-0f172a?style=for-the-badge&logo=github)](https://mohammeddaniyal.github.io/hr-core-architecture-evolution/)
+
 This repository contains the same Human Resources CRUD domain implemented **four different times**, each using a progressively modern architectural approach.
 
 The purpose of this project is not merely to build a CRUD application, but to analyze how web architectures evolved, the limitations each stage exposed, and how subsequent patterns addressed those constraints.
+
+---
+
+## Live Interactive Portfolio
+
+Instead of cloning and running these legacy servers locally, you can interact with the live cloud deployments of all four architectural stages via the documentation portal:
+
+👉 **[Access the Live Architecture Portal](https://mohammeddaniyal.github.io/hr-core-architecture-evolution/)**
+
+*(Note: Demo login credentials and Role-Based Access Control (RBAC) test accounts are provided directly on the portal's project cards).*
 
 ---
 
