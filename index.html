@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Core | Architecture Evolution</title>
+    <style>
+        :root {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-hover: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --border-hover: #475569;
+            --accent-primary: #3b82f6;
+            --accent-success: #10b981;
+            
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .layout-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 64px;
+            max-width: 850px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .page-header .engineering-intent {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 24px;
+            border-left: 3px solid var(--accent-primary);
+            padding-left: 12px;
+        }
+
+        .meta-tag {
+            display: inline-flex;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 6px 16px;
+            border-radius: 9999px;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .architecture-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Elegant Cards */
+        .stage-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .stage-card:hover {
+            border-color: var(--border-hover);
+            background-color: #233044;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .stage-number {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .stage-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .stage-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 24px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .tech-tag {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .action-link {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: var(--bg-hover);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .action-link:hover {
+            background-color: var(--border-hover);
+        }
+
+        .action-link.primary {
+            background-color: var(--accent-primary);
+            color: #ffffff;
+        }
+
+        .action-link.primary:hover {
+            background-color: #2563eb;
+        }
+
+        .site-footer {
+            margin-top: 80px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .site-footer a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .site-footer a:hover {
+            color: var(--accent-primary);
+        }
+        /* Demo Credentials */
+        .demo-creds {
+            background-color: rgba(2, 6, 23, 0.4);
+            border: 1px dashed var(--border-hover);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .demo-creds-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: var(--accent-primary);
+        }
+
+        .cred-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .cred-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .cred-val {
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout-container">
+        <header class="page-header">
+            <h1>HR Core: Architecture Evolution</h1>
+            <p>A project demonstrating the evolution of a Java web architecture — from raw Servlet-based rendering to a fully decoupled Spring Boot SPA.</p>
+            <p class="engineering-intent">Each stage represents a deliberate architectural refactor to solve real limitations discovered in the previous implementation.</p>
+            <div class="meta-tag">Author: Mohammed Daniyal</div>
+        </header>
+
+        <div class="architecture-grid">
+            <article class="stage-card">
+                <div class="card-header">
+                    <h2>Raw Servlet Monolith</h2>
+                    <span class="stage-number">Stage 1</span>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag">Java Servlets</span>
+                    <span class="tech-tag">DAO Pattern</span>
+                    <span class="tech-tag">Custom Java CLI</span>
+                </div>
+                <p>The baseline architecture. Database interactions are isolated in a DAO layer, but UI logic and business rules are tightly coupled inside Servlets. To reduce the friction of manually generating HTML inside Java, a custom CLI tool (PWPrintln) was created to convert HTML markup into <code>PrintWriter.println()</code> statements.</p>
+                <a href="https://hr-core-stages.onrender.com/stage1" target="_blank" class="action-link">Launch Live Application</a>
+            </article>
+
+            <article class="stage-card">
+                <div class="card-header">
+                    <h2>MVC Architecture</h2>
+                    <span class="stage-number">Stage 2</span>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag">JSP</span>
+                    <span class="tech-tag">Reflection API</span>
+                    <span class="tech-tag">Custom Tag Engine</span>
+                </div>
+                <p>The architecture shifts to a strict Model-2 MVC pattern using JSP for the view layer. A custom Tag Library (TLD) was implemented to eliminate Java scriptlets, enabling declarative UI binding via Java Reflection and enforcing Synchronizer Token security at the view level.</p>
+                <div class="demo-creds">
+                    <div class="demo-creds-title">Demo Access</div>
+                    <div class="cred-line">
+                        <span>User: <span class="cred-val">admin</span></span>
+                        <span>Pass: <span class="cred-val">admin</span></span>
+                    </div>
+                </div>
+                <a href="https://hr-core-stages.onrender.com/stage2" target="_blank" class="action-link">Launch Live Application</a>
+            </article>
+
+            <article class="stage-card">
+                <div class="card-header">
+                    <h2>Stateless Client-Server Architecture</h2>
+                    <span class="stage-number">Stage 3</span>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag">Vanilla JS AJAX</span>
+                    <span class="tech-tag">JSON API</span>
+                    <span class="tech-tag">DOM Templating</span>
+                </div>
+                <p>The backend stops rendering HTML and exclusively provides a JSON-based API. The frontend relies on raw <code>XMLHttpRequest</code> and a custom Vanilla JS <code>cloneNode</code> templating engine, eliminating synchronous page reloads and decoupling presentation from data.</p>
+                <div class="demo-creds">
+                    <div class="demo-creds-title">Demo Access</div>
+                    <div class="cred-line">
+                        <span>User: <span class="cred-val">admin</span></span>
+                        <span>Pass: <span class="cred-val">admin</span></span>
+                    </div>
+                </div>
+                <a href="https://hr-core-stages.onrender.com/stage3" target="_blank" class="action-link">Launch Live Application</a>
+            </article>
+
+            <article class="stage-card">
+                <div class="card-header">
+                    <h2>Spring Boot SPA Architecture</h2>
+                    <span class="stage-number">Stage 4</span>
+                </div>
+                <div class="tech-tags">
+                    <span class="tech-tag">Spring Data JPA</span>
+                    <span class="tech-tag">Vanilla JS Router</span>
+                    <span class="tech-tag">Spring Security</span>
+                </div>
+                <p>The backend is rebuilt using Spring Boot and Spring Data JPA, replacing manual JDBC with Hibernate ORM. The frontend evolves into a Single Page Application using a custom History API router. Authentication and Spring Security RBAC dynamically control UI behavior based on user roles.</p>
+                <div class="demo-creds">
+                    <div class="demo-creds-title">RBAC Demo Access</div>
+                    <div class="cred-line">
+                        <span>Admin: <span class="cred-val">admin</span></span>
+                        <span>Pass: <span class="cred-val">admin</span></span>
+                    </div>
+                    <div class="cred-line">
+                        <span>Standard: <span class="cred-val">user</span></span>
+                        <span>Pass: <span class="cred-val">user</span></span>
+                    </div>
+                </div>
+                <a href="https://hr-core-springboot.onrender.com" target="_blank" class="action-link primary">Launch Live Application</a>
+            </article>
+        </div>
+
+        <footer class="site-footer">
+            <span>&copy; 2026 HR Core Project</span>
+            <a href="https://github.com/mohammeddaniyal/hr-core-architecture-evolution" target="_blank">GitHub Repository &rarr;</a>
+        </footer>
+    </div>
+
+</body>
+</html>
